@@ -7,7 +7,7 @@ const API_BASE_URL = 'http://localhost:8000';
 
 function App() {
   const [studyText, setStudyText] = useState('');
-  const [selectedModel, setSelectedModel] = useState('llama-3.1-8b-instant');
+  const [selectedModel, setSelectedModel] = useState(''); // ✅ FIXED: Empty initially, will be set from backend
   const [availableModels, setAvailableModels] = useState([]);
   const [cards, setCards] = useState([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -32,7 +32,13 @@ function App() {
     try {
       const response = await axios.get(`${API_BASE_URL}/`);
       setApiStatus(response.data);
-      setAvailableModels(response.data.available_models);
+      
+      // ✅ FIXED: Fetch available models dynamically
+      if (response.data.available_models && response.data.available_models.length > 0) {
+        setAvailableModels(response.data.available_models);
+        // Set the first available model as default
+        setSelectedModel(response.data.available_models[0]);
+      }
     } catch (err) {
       setError('Cannot connect to backend. Make sure it\'s running on port 8000.');
     }
@@ -146,10 +152,10 @@ function App() {
     <div className="app">
       <header className="header">
         <h1>🧠 AI Flashcard Generator</h1>
-        <p>Powered by Groq LLM</p>
+        <p>Powered by HuggingFace Models</p>
         {apiStatus && (
-          <div className={`status ${apiStatus.api_key_configured ? 'success' : 'warning'}`}>
-            {apiStatus.api_key_configured ? '✓ Connected' : '⚠ API Key Missing'}
+          <div className="status success">
+            ✓ Connected · {availableModels.length} models available
           </div>
         )}
       </header>
@@ -258,18 +264,22 @@ function App() {
             <select
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value)}
-              disabled={loading}
+              disabled={loading || availableModels.length === 0}
             >
-              {availableModels.map(model => (
-                <option key={model} value={model}>{model}</option>
-              ))}
+              {availableModels.length === 0 ? (
+                <option value="">Loading models...</option>
+              ) : (
+                availableModels.map(model => (
+                  <option key={model} value={model}>{model}</option>
+                ))
+              )}
             </select>
           </div>
 
           <button
             className="generate-btn"
             onClick={generateFlashcards}
-            disabled={loading || studyText.length < 50}
+            disabled={loading || studyText.length < 50 || !selectedModel}
           >
             {loading ? '⏳ Generating...' : '🚀 Generate Flashcards'}
           </button>
