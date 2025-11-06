@@ -11,12 +11,14 @@ import tempfile
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-import PyPDF2
 import torch
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from logger import Logger
+# Import custom modules
+from pdf_processor import PDFProcessor, PDFSection
 from pydantic import BaseModel, Field
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
@@ -39,19 +41,6 @@ DEFAULT_MODEL = "qwen-1.5b"
 # Global model cache
 hf_model_cache = {}
 hf_tokenizer_cache = {}
-
-# PDF section detection parameters
-MIN_SECTION_CHARS = 2000
-MIN_WORD_COUNT = 300
-
-CHAPTER_PATTERNS = [
-    r'^CHAPTER\s+[IVXLCDM\d]+[\s:.—-]*(.+)$',
-    r'^Chapter\s+[IVXLCDM\d]+[\s:.—-]*(.+)$',
-    r'^UNIT\s+\d+[\s:.—-]*(.+)$',
-    r'^PART\s+[IVXLCDM\d]+[\s:.—-]*(.+)$',
-    r'^MODULE\s+\d+[\s:.—-]*(.+)$',
-    r'^SECTION\s+[IVXLCDM\d]+[\s:.—-]*(.+)$',
-]
 
 BASELINE_PROMPT = """
 You are an educational assistant that reads study material and creates flashcards
@@ -93,16 +82,6 @@ class Flashcard(BaseModel):
     hint: Optional[str] = None
 
 
-class PDFSection(BaseModel):
-    title: str
-    content: str
-    page_start: int
-    page_end: int
-    level: int
-    word_count: int
-    preview: str
-
-
 class GenerateRequest(BaseModel):
     study_text: str = Field(..., min_length=50)
     model: str = Field(default=DEFAULT_MODEL)
@@ -125,46 +104,6 @@ class PDFUploadResponse(BaseModel):
 class HealthResponse(BaseModel):
     status: str
     available_models: List[str]
-
-
-# ============================================================================
-# LOGGING UTILITIES
-# ============================================================================
-
-class Logger:
-    """Simple logging utility for consistent output"""
-    
-    @staticmethod
-    def header(message: str, width: int = 80):
-        """Print a header message"""
-        print("\n" + "=" * width)
-        print(message)
-        print("=" * width)
-    
-    @staticmethod
-    def section(message: str):
-        """Print a section message"""
-        print(f"\n{message}")
-    
-    @staticmethod
-    def info(message: str, indent: int = 2):
-        """Print an info message"""
-        print(" " * indent + f"[INFO] {message}")
-    
-    @staticmethod
-    def success(message: str, indent: int = 2):
-        """Print a success message"""
-        print(" " * indent + f"[OK] {message}")
-    
-    @staticmethod
-    def warning(message: str, indent: int = 2):
-        """Print a warning message"""
-        print(" " * indent + f"[WARNING] {message}")
-    
-    @staticmethod
-    def error(message: str, indent: int = 2):
-        """Print an error message"""
-        print(" " * indent + f"[ERROR] {message}")
 
 
 # ============================================================================
@@ -214,14 +153,7 @@ def check_pytorch_device():
 
 
 def print_usage_info():
-    """Print API usage information"""
-    Logger.section("Usage Examples:")
-    print('  Python: requests.post("http://localhost:8000/generate", '
-          'json={"study_text": "...", "model": "qwen-1.5b"})')
-    print('  cURL: curl -X POST "http://localhost:8000/generate" '
-          '-H "Content-Type: application/json" '
-          '-d \'{"study_text": "...", "model": "qwen-1.5b"}\'')
-    
+    """Print API usage information"""    
     Logger.section("API Endpoints:")
     print("  - Health check: http://localhost:8000/")
     print("  - Available models: http://localhost:8000/models")
@@ -250,234 +182,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-# ============================================================================
-# PDF PROCESSING MODULE
-# ============================================================================
-
-class PDFProcessor:
-    """Handles PDF text extraction and section detection"""
-    
-    @staticmethod
-    def extract_text_from_pdf(pdf_file) -> List[Dict[str, Any]]:
-        """Extract text from PDF file"""
-        pages = []
-        try:
-            pdf_reader = PyPDF2.PdfReader(pdf_file)
-            total_pages = len(pdf_reader.pages)
-            
-            for page_num in range(total_pages):
-                page = pdf_reader.pages[page_num]
-                text = page.extract_text()
-                pages.append({
-                    'page_number': page_num + 1,
-                    'text': text
-                })
-        except Exception as e:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Error reading PDF: {str(e)}"
-            )
-        
-        return pages
-    
-    @staticmethod
-    def is_likely_header(line: str, next_lines: List[str]) -> tuple:
-        """Check if a line is likely a section header"""
-        line = line.strip()
-        
-        if len(line) < 3 or len(line) > 200:
-            return False, 0, None
-        
-        # Check against known chapter patterns
-        for pattern in CHAPTER_PATTERNS:
-            match = re.match(pattern, line, re.IGNORECASE)
-            if match:
-                title = match.group(1).strip() if match.groups() else line
-                return True, 1, title
-        
-        # Check for all-caps headers
-        words = line.split()
-        if line.isupper() and 2 <= len(words) <= 15 and 15 <= len(line) <= 120:
-            if next_lines and not next_lines[0].strip().isupper():
-                return True, 1, line
-        
-        # Check for numbered sections
-        if re.match(r'^([IVXLCDM]+|\d{1,2})\s+[A-Z][A-Za-z\s]{10,80}$', line):
-            return True, 1, line
-        
-        return False, 0, None
-    
-    @staticmethod
-    def clean_text(text: str) -> str:
-        """Clean and normalize text"""
-        text = re.sub(r'\s+', ' ', text)
-        text = re.sub(r'\n\s*\d+\s*\n', '\n', text)
-        text = re.sub(r'Page\s+\d+', '', text, flags=re.IGNORECASE)
-        return text.strip()
-    
-    @staticmethod
-    def detect_sections(pages: List[Dict[str, Any]]) -> List[PDFSection]:
-        """Detect major sections in PDF"""
-        sections = []
-        current_section = None
-        current_content = []
-        current_page_start = 1
-        
-        for page_data in pages:
-            page_num = page_data['page_number']
-            text = page_data['text']
-            lines = text.split('\n')
-            
-            for i, line in enumerate(lines):
-                line = line.strip()
-                if not line:
-                    continue
-                
-                next_lines = [
-                    lines[j].strip() 
-                    for j in range(i+1, min(i+5, len(lines)))
-                ]
-                is_header, level, title = PDFProcessor.is_likely_header(
-                    line, next_lines
-                )
-                
-                if is_header and title:
-                    if current_section and current_content:
-                        section = PDFProcessor._create_section(
-                            current_section,
-                            current_content,
-                            current_page_start,
-                            page_num - 1 if page_num > 1 else page_num
-                        )
-                        if section:
-                            sections.append(section)
-                    
-                    current_section = title
-                    current_content = []
-                    current_page_start = page_num
-                else:
-                    current_content.append(line)
-        
-        # Save last section
-        if current_section and current_content:
-            section = PDFProcessor._create_section(
-                current_section,
-                current_content,
-                current_page_start,
-                pages[-1]['page_number']
-            )
-            if section:
-                sections.append(section)
-        
-        # Fallback if too few sections detected
-        if len(sections) < 2 and pages:
-            sections = PDFProcessor._fallback_section_division(pages)
-        
-        return sections
-    
-    @staticmethod
-    def _create_section(
-        title: str,
-        content: List[str],
-        page_start: int,
-        page_end: int
-    ) -> Optional[PDFSection]:
-        """Create a PDFSection object from content"""
-        content_text = PDFProcessor.clean_text(' '.join(content))
-        word_count = len(content_text.split())
-        
-        if len(content_text) >= MIN_SECTION_CHARS and word_count >= MIN_WORD_COUNT:
-            preview = (
-                content_text[:200] + '...' 
-                if len(content_text) > 200 
-                else content_text
-            )
-            return PDFSection(
-                title=title,
-                content=content_text,
-                page_start=page_start,
-                page_end=page_end,
-                level=1,
-                word_count=word_count,
-                preview=preview
-            )
-        return None
-    
-    @staticmethod
-    def _fallback_section_division(
-        pages: List[Dict[str, Any]]
-    ) -> List[PDFSection]:
-        """Fallback: divide by page clusters"""
-        sections = []
-        total_pages = len(pages)
-        
-        # Determine cluster size based on document length
-        if total_pages <= 20:
-            cluster_size = 5
-        elif total_pages <= 50:
-            cluster_size = 8
-        elif total_pages <= 100:
-            cluster_size = 10
-        else:
-            cluster_size = 15
-        
-        section_num = 1
-        for i in range(0, len(pages), cluster_size):
-            page_group = pages[i:i+cluster_size]
-            content = ' '.join([p['text'] for p in page_group])
-            content = PDFProcessor.clean_text(content)
-            word_count = len(content.split())
-            
-            if len(content) >= MIN_SECTION_CHARS and word_count >= MIN_WORD_COUNT:
-                # Try to extract a meaningful title
-                title = PDFProcessor._extract_title_from_content(
-                    content, section_num, page_group
-                )
-                
-                preview = (
-                    content[:200] + '...' 
-                    if len(content) > 200 
-                    else content
-                )
-                sections.append(PDFSection(
-                    title=title,
-                    content=content,
-                    page_start=page_group[0]['page_number'],
-                    page_end=page_group[-1]['page_number'],
-                    level=1,
-                    word_count=word_count,
-                    preview=preview
-                ))
-                section_num += 1
-        
-        return sections
-    
-    @staticmethod
-    def _extract_title_from_content(
-        content: str,
-        section_num: int,
-        page_group: List[Dict[str, Any]]
-    ) -> str:
-        """Extract a title from content or generate a default one"""
-        sentences = [
-            s.strip() 
-            for s in content.split('.') 
-            if len(s.strip()) > 20
-        ]
-        
-        if sentences:
-            for sentence in sentences[:5]:
-                if 10 < len(sentence) < 100 and sentence[0].isupper():
-                    return (
-                        sentence[:80] + ('...' if len(sentence) > 80 else '')
-                    )
-        
-        return (
-            f"Section {section_num}: "
-            f"Pages {page_group[0]['page_number']}-{page_group[-1]['page_number']}"
-        )
 
 
 # ============================================================================
@@ -1067,6 +771,7 @@ def run_startup_tests():
     Logger.success("CORS enabled for: localhost:3000, localhost:5173")
     Logger.success("JSON parsing: Enhanced with 5 fallback strategies")
     Logger.success("Retry logic: Up to 3 attempts with salvage mode")
+    Logger.success("PDF processing: Modular design with separate processor")
     
     Logger.header("ALL STARTUP TESTS PASSED")
     
