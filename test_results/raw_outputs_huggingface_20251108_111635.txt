@@ -1,0 +1,694 @@
+================================================================================
+ALL RAW OUTPUTS - HUGGINGFACE - 20251108_111635
+Model: qwen-1.5b, Temperature: 0.7
+================================================================================
+
+
+================================================================================
+TEST: baseline_photosynthesis
+Provider: huggingface
+Model: qwen-1.5b
+Status: partial
+Timestamp: 20251108_111635
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+You are an educational assistant that reads study material and creates flashcards to help students remember key facts.
+
+Your task: **generate concise, varied flashcards** in valid JSON format.
+
+Each flashcard must have:
+- "front": a short question or prompt (≤120 characters)
+- "back": a list of 1–4 short bullets (each ≤1 line)
+- "hint": a brief clue if possible (optional but preferred)
+
+Format your final output strictly as:
+{{
+  "cards": [
+    {{
+      "front": "...",
+      "back": ["...", "..."],
+      "hint": "..."
+    }},
+    ...
+  ]
+}}
+
+Return only JSON — no extra commentary.
+
+Study Text:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Photosynthesis is the process by which plants convert light energy into chemical energy. It occurs in the chloroplasts of plant cells. The process requires carbon dioxide, water, and sunlight. The main product is glucose, and oxygen is released as a byproduct. Photosynthesis has two main stages: the light-dependent reactions and the Calvin cycle.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+hotosynthesis convert light energy into?",
+      "back": ["chemical energy", "stored energy", "bioenergy"],
+      "hint": "It transforms solar power into usable forms."
+    },
+    {
+      "front": "Where do photosynthesis occur?",
+      "back": ["chloroplasts", "cell membrane", "cytoplasm"],
+      "hint": "These specialized organelles contain chlorophyll."
+    },
+    {
+      "front": "Which elements are essential for photosynthesis?",
+      "back": ["carbon dioxide", "water", "light"],
+      "hint": "All three are required for the reaction to proceed."
+    },
+    {
+      "front": "What's the primary end-product of photosynthesis?",
+      "back": ["glucose", "sugar", "organic compound"],
+      "hint": "A carbohydrate derived from carbon dioxide and water."
+    }
+  ]
+}
+```
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: short_prompt_history
+Provider: huggingface
+Model: qwen-1.5b
+Status: failed
+Timestamp: 20251108_111707
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Create flashcards as JSON. Format: {{"cards": [{{"front": "question", "back": ["answer1", "answer2"], "hint": "clue"}}]}}. Only return valid JSON.
+
+Text: {source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+World War II was a global conflict that lasted from 1939 to 1945. It involved most of the world's nations forming two opposing military alliances: the Allies and the Axis. Key events include the invasion of Poland, Pearl Harbor attack, D-Day invasion, and the atomic bombings of Hiroshima and Nagasaki.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+II?",
+      "back": ["A global conflict lasting from 1939 to 1945 involving major powers forming Allies and Axis alliances"],
+      "hint": "Key elements including significant battles like Invasion of Poland, Pearl Harbor Attack, D-Day, and Atomic Bombings"
+    }
+  ]
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: detailed_prompt_science
+Provider: huggingface
+Model: qwen-1.5b
+Status: partial
+Timestamp: 20251108_111713
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+You are an expert educational content creator specializing in creating study flashcards.
+
+INSTRUCTIONS:
+1. Read the study material carefully
+2. Identify key concepts, definitions, and facts
+3. Create clear, concise flashcards that test understanding
+4. Each flashcard should focus on ONE concept
+5. Make questions specific and answerable
+
+FORMAT REQUIREMENTS:
+- Output ONLY valid JSON
+- Use this exact structure:
+{{
+  "cards": [
+    {{
+      "front": "Clear question (max 120 chars)",
+      "back": ["Answer point 1", "Answer point 2", "Answer point 3"],
+      "hint": "Optional helpful hint"
+    }}
+  ]
+}}
+
+IMPORTANT: Return ONLY the JSON object. No explanations before or after.
+
+Study Material:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+DNA, or deoxyribonucleic acid, is the hereditary material in humans and almost all other organisms. DNA is made up of molecules called nucleotides. Each nucleotide contains a phosphate group, a sugar group and a nitrogen base. The four types of nitrogen bases are adenine (A), thymine (T), guanine (G) and cytosine (C). DNA replication is the process by which DNA makes a copy of itself during cell division.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+?",
+      "back": ["The genetic material in cells.", "Made up of molecules called nucleotides.", "Contains information for protein synthesis."]
+    },
+    {
+      "front": "How many types of nitrogen bases does DNA have?",
+      "back": ["Four types - Adenine (A), Thymine (T), Guanine (G), Cytosine (C)."]
+    },
+    {
+      "front": "What do nucleotides contain?",
+      "back": ["Phosphate groups", "Sugar groups", "Nitrogen bases"]
+    },
+    {
+      "front": "What is DNA replication?",
+      "back": ["Process where DNA makes a copy of itself during cell division."]
+    }
+  ]
+}
+```
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: simple_definition_focus
+Provider: huggingface
+Model: qwen-1.5b
+Status: failed
+Timestamp: 20251108_111724
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Create definition-focused flashcards. Each card should ask 'What is X?' with clear answers. Return as JSON: {{"cards": [{{"front": "What is...", "back": ["definition"], "hint": "category"}}]}}.
+
+Content: {source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Artificial Intelligence (AI) refers to the simulation of human intelligence in machines. Machine Learning is a subset of AI that enables systems to learn from data. Deep Learning uses neural networks with multiple layers. Natural Language Processing (NLP) allows computers to understand human language.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+ificial Intelligence?",
+      "back": "Artificial Intelligence (AI) refers to the simulation of human intelligence in machines.",
+      "hint": "Category"
+    },
+    {
+      "front": "What is Machine Learning?",
+      "back": "Machine Learning is a subset of AI that enables systems to learn from data.",
+      "hint": "Category"
+    },
+    {
+      "front": "What is Deep Learning?",
+      "back": "Deep Learning uses neural networks with multiple layers.",
+      "hint": "Category"
+    },
+    {
+      "front": "What is Natural Language Processing (NLP)?",
+      "back": "Natural Language Processing (NLP) allows computers to understand human language.",
+      "hint": "Category"
+    }
+  ]
+}
+```
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: numbered_facts_math
+Provider: huggingface
+Model: qwen-1.5b
+Status: partial
+Timestamp: 20251108_111735
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Generate flashcards that break down information into numbered points. Format:
+{{
+  "cards": [
+    {{
+      "front": "List the key facts about X",
+      "back": ["Fact 1", "Fact 2", "Fact 3"],
+      "hint": "Topic category"
+    }}
+  ]
+}}
+
+Source: {source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+The Pythagorean theorem states that in a right triangle, a² + b² = c², where c is the hypotenuse. A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself. The first five prime numbers are 2, 3, 5, 7, and 11. Pi (π) is approximately 3.14159 and represents the ratio of a circle's circumference to its diameter.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+orem states that in a right triangle, a² + b² = c², where c is the hypotenuse.",
+      "back": ["In a right triangle, the square of the length of the hypotenuse (c) is equal to the sum of the squares of the lengths of the other two sides (a and b). This relationship can be used to solve for missing side lengths when one or more side lengths are known.", "For example, if you know the lengths of two sides of a right triangle, you can find the length of the third side using this formula."],
+      "hint": "Geometry/Algebra"
+    },
+    {
+      "front": "A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.",
+      "back": ["Prime numbers have many interesting properties and applications in mathematics. For instance, they are fundamental in cryptography because it is difficult to factorize large prime numbers. Prime numbers also play a crucial role in the RSA encryption algorithm.", "Some notable examples of prime numbers include 2, 3, 5, 7, 11, 13, 17, 19, etc. They continue infinitely without repeating any pattern."]
+      "hint": "Number Theory/Combinatorics"
+    },
+    {
+      "front": "The first five prime numbers are 2, 3, 5, 7, and 11.",
+      "back": ["These are the smallest prime numbers. It is important to note that there are infinitely many prime numbers, as proven by Euclid over 2000 years ago. While most primes are small, finding larger primes becomes increasingly challenging with each increment in size.",
+      "Every even number greater than 2 can be expressed as the product of two primes. This is an example of the Fundamental Theorem of Arithmetic."]
+      "hint": "Number Theory"
+    },
+    {
+      "front": "Pi (π) is approximately 3.14159 and represents the ratio of a circle’s circumference to its diameter.",
+      "back": ["Pi is a mathematical constant representing the ratio of a circle's circumference to its diameter. It is an irrational number, meaning its decimal representation goes on forever without repeating.",
+      "The value of pi varies depending on the precision needed, but the commonly accepted approximation is 3.14159. In many contexts, such as calculating areas and volumes, π is often approximated as 3.14."]
+      "hint": "Calculus/Mathematics"
+    }
+  ]
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: application_based_programming
+Provider: huggingface
+Model: qwen-1.5b
+Status: failed
+Timestamp: 20251108_111817
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Create application-focused flashcards. Each card should test practical understanding with 'How do you...' or 'When would you...' questions.
+
+JSON format:
+{{
+  "cards": [
+    {{
+      "front": "How/When/Why question",
+      "back": ["practical answer"],
+      "hint": "context"
+    }}
+  ]
+}}
+
+Material:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Python lists are mutable, ordered collections that can contain mixed data types. Lists are created using square brackets. Common list methods include append(), remove(), pop(), and sort(). List comprehensions provide a concise way to create lists. Example: [x**2 for x in range(10)] creates a list of squares.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+ython list?",
+      "back": "A mutable, ordered collection that can hold different data types.",
+      "hint": "Definition and basic concept."
+    },
+    {
+      "front": "How do you create a Python list?",
+      "back": "[variable_name] = [expression]",
+      "hint": "Syntax example."
+    },
+    {
+      "front": "What does the `append()` method do on a list?",
+      "back": "Adds an element at the end of the list.",
+      "hint": "Common use case."
+    },
+    {
+      "front": "How do you remove an item from a list?",
+      "back": "list.remove(item)",
+      "hint": "Removes a specified item from the list."
+    },
+    {
+      "front": "What happens when you call `pop()` on a list?",
+      "back": "Removes and returns the last item if no index is provided; otherwise, removes and returns the item at the given index.",
+      "hint": "Behavior based on parameters."
+    },
+    {
+      "front": "Can you explain what `sort()` does?",
+      "back": "Sorts elements of the list in place (does not return new list).",
+      "hint": "Purpose and effect."
+    },
+    {
+      "front": "How do you make a list comprehension?",
+      "back": "[new_list] = [expr for var in iterable]",
+      "hint": "Syntax of creating a list using a loop and condition."
+    }
+  ]
+}
+```
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: comparison_style_economics
+Provider: huggingface
+Model: qwen-1.5b
+Status: partial
+Timestamp: 20251108_111838
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Create comparison flashcards that highlight differences. Format: {{"cards": [{{"front": "Compare X and Y", "back": ["X: point", "Y: point"], "hint": "key difference"}}]}}.
+
+Text: {source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Capitalism is an economic system based on private ownership and free markets. Socialism involves collective or government ownership of production means. In capitalism, prices are determined by supply and demand. In socialism, the government often controls prices. Capitalism encourages competition, while socialism emphasizes equality.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+": [
+    {
+      "front": "Capitalism vs. Socialism",
+      "back": [
+        "Capitalism: Private ownership, free markets, prices determined by supply and demand.",
+        "Socialism: Collective/government ownership, prices controlled by the government."
+      ],
+      "hint": "Key Differences"
+    }
+  ]
+}
+```
+
+This format clearly compares the fundamental aspects of capitalist and socialist economic systems.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: minimal_prompt_geography
+Provider: huggingface
+Model: qwen-1.5b
+Status: failed
+Timestamp: 20251108_111846
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+JSON flashcards only. Format: {{"cards": [{{"front": "?", "back": ["!"], "hint": "*"}}]}}. Text: {source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+The Amazon Rainforest is located in South America, primarily in Brazil. It is the world's largest tropical rainforest, covering approximately 5.5 million square kilometers. The Amazon River, which flows through the rainforest, is the second longest river in the world. The rainforest is home to millions of species of plants and animals.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+location of the Amazon Rainforest?",
+      "back": "The Amazon Rainforest is located in South America, primarily in Brazil.",
+      "hint": "*It covers approximately 5.5 million square kilometers."
+    },
+    {
+      "front": "Which river flows through the Amazon Rainforest?",
+      "back": "The Amazon River",
+      "hint": "*It is the second longest river in the world."
+    },
+    {
+      "front": "How many species live in the Amazon Rainforest?",
+      "back": "The rainforest is home to millions of species of plants and animals.",
+      "hint": "*Including over 400,000 plant species and countless animal species."
+    }
+  ]
+}
+```
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: strict_json_chemistry
+Provider: huggingface
+Model: qwen-1.5b
+Status: partial
+Timestamp: 20251108_111857
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+CRITICAL: Output MUST be valid JSON with NO text before or after.
+
+Structure:
+{{
+  "cards": [
+    {{
+      "front": "question string",
+      "back": ["array", "of", "strings"],
+      "hint": "string or null"
+    }}
+  ]
+}}
+
+DO NOT include any explanatory text. DO NOT use markdown code blocks. Return raw JSON only.
+
+Input:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Water (H2O) is composed of two hydrogen atoms and one oxygen atom. It has a boiling point of 100°C at sea level. Water is a polar molecule, meaning it has a slight positive charge on one end and a slight negative charge on the other. This polarity allows water to dissolve many substances, earning it the title 'universal solvent'.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+er made up of?",
+      "back": ["two hydrogen atoms", "one oxygen atom"],
+      "hint": null
+    },
+    {
+      "front": "At what temperature does water boil at sea level?",
+      "back": [100°C],
+      "hint": null
+    },
+    {
+      "front": "Why is water considered a universal solvent?",
+      "back": ["polarity"],
+      "hint": null
+    }
+  ]
+}
+```
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: verbose_prompt_literature
+Provider: huggingface
+Model: qwen-1.5b
+Status: partial
+Timestamp: 20251108_111904
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+You are an expert literature teacher creating study flashcards for students.
+
+GOALS:
+- Help students remember key details about the text
+- Test comprehension of themes and quotes
+- Make cards engaging and memorable
+
+GUIDELINES:
+- Front: Clear, specific questions
+- Back: Concise answers (1-4 bullet points)
+- Hint: Provide context or memory aids
+- Focus on important concepts, not trivial details
+
+OUTPUT FORMAT:
+You must return ONLY a JSON object with this exact structure:
+{{
+  "cards": [
+    {{
+      "front": "Your question here (maximum 120 characters)",
+      "back": ["Answer point 1", "Answer point 2"],
+      "hint": "Helpful memory aid or context"
+    }}
+  ]
+}}
+
+REMEMBER: 
+- Return ONLY the JSON
+- No explanations
+- No markdown formatting
+- No code blocks
+- Just the raw JSON object
+
+Study Content:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Shakespeare's Romeo and Juliet is a tragedy about two young star-crossed lovers whose deaths ultimately reconcile their feuding families. The play was written in 1597 and is set in Verona, Italy. Major themes include love, fate, and the consequences of family rivalry. Famous quotes include 'What's in a name?' and 'A rose by any other name would smell as sweet.'
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+hakespeare's Romeo and Juliet?",
+      "back": ["William Shakespeare"],
+      "hint": "Shakespearean playwright known for many works including this tragic story."
+    },
+    {
+      "front": "'Love is not all,' says Friar Laurence to Romeo.",
+      "back": ["Friar Laurence suggests that true happiness cannot be solely based on romantic feelings"],
+      "hint": "Inferiority of love over other virtues; deeper understanding needed."
+    },
+    {
+      "front": "Romeo and Juliet die because of their own actions rather than fate.",
+      "back": ["They commit suicide after learning they will die together in battle"],
+      "hint": "Dramatic irony at play; unexpected resolution."
+    },
+    {
+      "front": "The play is set in Verona, Italy during the Renaissance period.",
+      "back": ["This era is characterized by arts, culture, science, philosophy, politics, etc."],
+      "hint": "Historical accuracy in setting enhances dramatic effect."
+    }
+  ]
+}
+```
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: question_types_biology
+Provider: huggingface
+Model: qwen-1.5b
+Status: partial
+Timestamp: 20251108_111920
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Create varied question types: definitions, sequences, comparisons, and applications. Each card should use a different question style.
+
+JSON structure:
+{{
+  "cards": [
+    {{
+      "front": "Question (varied type)",
+      "back": ["answers"],
+      "hint": "question type"
+    }}
+  ]
+}}
+
+Content:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Mitosis is the process of cell division that results in two identical daughter cells. It consists of four main phases: prophase, metaphase, anaphase, and telophase. During prophase, chromosomes condense and become visible. In metaphase, chromosomes align at the cell's center. During anaphase, sister chromatids separate. In telophase, two nuclei form.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+sis",
+      "back": ["The process of cell division resulting in two identical daughter cells.", "It includes four main stages: prophase, metaphase, anaphase, and telophase."],
+      "hint": "Definition"
+    },
+    {
+      "front": "List the Stages of Mitosis",
+      "back": ["Prophase, Metaphase, Anaphase, Telophase"],
+      "hint": "Sequence"
+    },
+    {
+      "front": "Compare Prophase with Metaphase",
+      "back": ["Prophase involves chromosome condensation and nuclear envelope breakdown.",
+              "Metaphase features homologous chromosomes aligned at the cell's center."],
+      "hint": "Comparison"
+    },
+    {
+      "front": "Explain the Role of Chromosomes during Anaphase",
+      "back": ["During anaphase, sister chromatids separate into individual chromosomes.",
+              "This ensures genetic material is evenly distributed to each daughter cell."],
+      "hint": "Application"
+    }
+  ]
+}
+```
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: bullet_heavy_history
+Provider: huggingface
+Model: qwen-1.5b
+Status: partial
+Timestamp: 20251108_111934
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Create flashcards with multiple back bullets for comprehensive answers. Aim for 3-4 bullet points per card.
+
+Format: {{"cards": [{{"front": "Q", "back": ["point 1", "point 2", "point 3", "point 4"], "hint": "hint"}}]}}
+
+Text:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+The Industrial Revolution began in Britain in the late 18th century. Key inventions included the steam engine by James Watt (1769), the spinning jenny by James Hargreaves (1764), and the power loom by Edmund Cartwright (1785). The revolution led to urbanization, factory systems, and significant social changes. Working conditions were often harsh, leading to labor movements.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+Revolution",
+      "back": [
+        "Began in Britain in the late 18th century.",
+        "Key inventions included:",
+        "Steam engine by James Watt (1769)",
+        "Spinning jenny by James Hargreaves (1764)",
+        "Power loom by Edmund Cartwright (1785)"
+      ],
+      "hint": "Note the timing and key figures."
+    },
+    {
+      "front": "Urbanization",
+      "back": [
+        "Resulted from industrial growth.",
+        "Workers moved from rural areas to cities.",
+        "New industries attracted migrants.",
+        "Increased demand for housing and infrastructure."
+      ],
+      "hint": "Consider the demographic shift and economic factors."
+    },
+    {
+      "front": "Factory Systems",
+      "back": [
+        "Introduced mass production techniques.",
+        "Large-scale assembly lines became common.",
+        "Improved efficiency and productivity.",
+        "Aided in rapid industrial expansion."
+      ],
+      "hint": "Focus on the impact of large-scale production methods."
+    },
+    {
+      "front": "Social Changes",
+      "back": [
+        "Significant shifts occurred in society.",
+        "Working class experienced improved living standards.",
+        "Middle classes grew wealthier through investments in factories.",
+        "Classes diverged into more affluent and less well-off groups."
+      ],
+      "hint": "Reflect on societal stratification and class dynamics."
+    }
+  ]
+}
+```
+--------------------------------------------------------------------------------
+

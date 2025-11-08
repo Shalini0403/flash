@@ -1,0 +1,362 @@
+[
+  {
+    "test_name": "baseline_photosynthesis",
+    "provider": "huggingface",
+    "model": "qwen-1.5b",
+    "timestamp": "20251108_111635",
+    "temperature": 0.7,
+    "parse_status": "partial",
+    "source_text": "Photosynthesis is the process by which plants convert light energy into chemical energy. It occurs in the chloroplasts of plant cells. The process requires carbon dioxide, water, and sunlight. The main product is glucose, and oxygen is released as a byproduct. Photosynthesis has two main stages: the light-dependent reactions and the Calvin cycle.",
+    "prompt_template": "You are an educational assistant that reads study material and creates flashcards to help students remember key facts.\n\nYour task: **generate concise, varied flashcards** in valid JSON format.\n\nEach flashcard must have:\n- \"front\": a short question or prompt (≤120 characters)\n- \"back\": a list of 1–4 short bullets (each ≤1 line)\n- \"hint\": a brief clue if possible (optional but preferred)\n\nFormat your final output strictly as:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"...\",\n      \"back\": [\"...\", \"...\"],\n      \"hint\": \"...\"\n    }},\n    ...\n  ]\n}}\n\nReturn only JSON — no extra commentary.\n\nStudy Text:\n{source_text}",
+    "formatted_prompt": "You are an educational assistant that reads study material and creates flashcards to help students remember key facts.\n\nYour task: **generate concise, varied flashcards** in valid JSON format.\n\nEach flashcard must have:\n- \"front\": a short question or prompt (≤120 characters)\n- \"back\": a list of 1–4 short bullets (each ≤1 line)\n- \"hint\": a brief clue if possible (optional but preferred)\n\nFormat your final output strictly as:\n{\n  \"cards\": [\n    {\n      \"front\": \"...\",\n      \"back\": [\"...\", \"...\"],\n      \"hint\": \"...\"\n    },\n    ...\n  ]\n}\n\nReturn only JSON — no extra commentary.\n\nStudy Text:\nPhotosynthesis is the process by which plants convert light energy into chemical energy. It occurs in the chloroplasts of plant cells. The process requires carbon dioxide, water, and sunlight. The main product is glucose, and oxygen is released as a byproduct. Photosynthesis has two main stages: the light-dependent reactions and the Calvin cycle.",
+    "raw_output": "hotosynthesis convert light energy into?\",\n      \"back\": [\"chemical energy\", \"stored energy\", \"bioenergy\"],\n      \"hint\": \"It transforms solar power into usable forms.\"\n    },\n    {\n      \"front\": \"Where do photosynthesis occur?\",\n      \"back\": [\"chloroplasts\", \"cell membrane\", \"cytoplasm\"],\n      \"hint\": \"These specialized organelles contain chlorophyll.\"\n    },\n    {\n      \"front\": \"Which elements are essential for photosynthesis?\",\n      \"back\": [\"carbon dioxide\", \"water\", \"light\"],\n      \"hint\": \"All three are required for the reaction to proceed.\"\n    },\n    {\n      \"front\": \"What's the primary end-product of photosynthesis?\",\n      \"back\": [\"glucose\", \"sugar\", \"organic compound\"],\n      \"hint\": \"A carbohydrate derived from carbon dioxide and water.\"\n    }\n  ]\n}\n```",
+    "parsed_output": null,
+    "salvaged_cards": {
+      "cards": [
+        {
+          "front": "Where do photosynthesis occur?",
+          "back": [
+            "chloroplasts",
+            "cell membrane",
+            "cytoplasm"
+          ],
+          "hint": "These specialized organelles contain chlorophyll."
+        },
+        {
+          "front": "Which elements are essential for photosynthesis?",
+          "back": [
+            "carbon dioxide",
+            "water",
+            "light"
+          ],
+          "hint": "All three are required for the reaction to proceed."
+        },
+        {
+          "front": "What's the primary end-product of photosynthesis?",
+          "back": [
+            "glucose",
+            "sugar",
+            "organic compound"
+          ],
+          "hint": "A carbohydrate derived from carbon dioxide and water."
+        }
+      ]
+    }
+  },
+  {
+    "test_name": "short_prompt_history",
+    "provider": "huggingface",
+    "model": "qwen-1.5b",
+    "timestamp": "20251108_111707",
+    "temperature": 0.7,
+    "parse_status": "failed",
+    "source_text": "World War II was a global conflict that lasted from 1939 to 1945. It involved most of the world's nations forming two opposing military alliances: the Allies and the Axis. Key events include the invasion of Poland, Pearl Harbor attack, D-Day invasion, and the atomic bombings of Hiroshima and Nagasaki.",
+    "prompt_template": "Create flashcards as JSON. Format: {{\"cards\": [{{\"front\": \"question\", \"back\": [\"answer1\", \"answer2\"], \"hint\": \"clue\"}}]}}. Only return valid JSON.\n\nText: {source_text}",
+    "formatted_prompt": "Create flashcards as JSON. Format: {\"cards\": [{\"front\": \"question\", \"back\": [\"answer1\", \"answer2\"], \"hint\": \"clue\"}]}. Only return valid JSON.\n\nText: World War II was a global conflict that lasted from 1939 to 1945. It involved most of the world's nations forming two opposing military alliances: the Allies and the Axis. Key events include the invasion of Poland, Pearl Harbor attack, D-Day invasion, and the atomic bombings of Hiroshima and Nagasaki.",
+    "raw_output": "II?\",\n      \"back\": [\"A global conflict lasting from 1939 to 1945 involving major powers forming Allies and Axis alliances\"],\n      \"hint\": \"Key elements including significant battles like Invasion of Poland, Pearl Harbor Attack, D-Day, and Atomic Bombings\"\n    }\n  ]\n}",
+    "parsed_output": null,
+    "salvaged_cards": null
+  },
+  {
+    "test_name": "detailed_prompt_science",
+    "provider": "huggingface",
+    "model": "qwen-1.5b",
+    "timestamp": "20251108_111713",
+    "temperature": 0.7,
+    "parse_status": "partial",
+    "source_text": "DNA, or deoxyribonucleic acid, is the hereditary material in humans and almost all other organisms. DNA is made up of molecules called nucleotides. Each nucleotide contains a phosphate group, a sugar group and a nitrogen base. The four types of nitrogen bases are adenine (A), thymine (T), guanine (G) and cytosine (C). DNA replication is the process by which DNA makes a copy of itself during cell division.",
+    "prompt_template": "You are an expert educational content creator specializing in creating study flashcards.\n\nINSTRUCTIONS:\n1. Read the study material carefully\n2. Identify key concepts, definitions, and facts\n3. Create clear, concise flashcards that test understanding\n4. Each flashcard should focus on ONE concept\n5. Make questions specific and answerable\n\nFORMAT REQUIREMENTS:\n- Output ONLY valid JSON\n- Use this exact structure:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"Clear question (max 120 chars)\",\n      \"back\": [\"Answer point 1\", \"Answer point 2\", \"Answer point 3\"],\n      \"hint\": \"Optional helpful hint\"\n    }}\n  ]\n}}\n\nIMPORTANT: Return ONLY the JSON object. No explanations before or after.\n\nStudy Material:\n{source_text}",
+    "formatted_prompt": "You are an expert educational content creator specializing in creating study flashcards.\n\nINSTRUCTIONS:\n1. Read the study material carefully\n2. Identify key concepts, definitions, and facts\n3. Create clear, concise flashcards that test understanding\n4. Each flashcard should focus on ONE concept\n5. Make questions specific and answerable\n\nFORMAT REQUIREMENTS:\n- Output ONLY valid JSON\n- Use this exact structure:\n{\n  \"cards\": [\n    {\n      \"front\": \"Clear question (max 120 chars)\",\n      \"back\": [\"Answer point 1\", \"Answer point 2\", \"Answer point 3\"],\n      \"hint\": \"Optional helpful hint\"\n    }\n  ]\n}\n\nIMPORTANT: Return ONLY the JSON object. No explanations before or after.\n\nStudy Material:\nDNA, or deoxyribonucleic acid, is the hereditary material in humans and almost all other organisms. DNA is made up of molecules called nucleotides. Each nucleotide contains a phosphate group, a sugar group and a nitrogen base. The four types of nitrogen bases are adenine (A), thymine (T), guanine (G) and cytosine (C). DNA replication is the process by which DNA makes a copy of itself during cell division.",
+    "raw_output": "?\",\n      \"back\": [\"The genetic material in cells.\", \"Made up of molecules called nucleotides.\", \"Contains information for protein synthesis.\"]\n    },\n    {\n      \"front\": \"How many types of nitrogen bases does DNA have?\",\n      \"back\": [\"Four types - Adenine (A), Thymine (T), Guanine (G), Cytosine (C).\"]\n    },\n    {\n      \"front\": \"What do nucleotides contain?\",\n      \"back\": [\"Phosphate groups\", \"Sugar groups\", \"Nitrogen bases\"]\n    },\n    {\n      \"front\": \"What is DNA replication?\",\n      \"back\": [\"Process where DNA makes a copy of itself during cell division.\"]\n    }\n  ]\n}\n```",
+    "parsed_output": null,
+    "salvaged_cards": {
+      "cards": [
+        {
+          "front": "How many types of nitrogen bases does DNA have?",
+          "back": [
+            "Four types - Adenine (A), Thymine (T), Guanine (G), Cytosine (C)."
+          ],
+          "hint": null
+        },
+        {
+          "front": "What do nucleotides contain?",
+          "back": [
+            "Phosphate groups",
+            "Sugar groups",
+            "Nitrogen bases"
+          ],
+          "hint": null
+        },
+        {
+          "front": "What is DNA replication?",
+          "back": [
+            "Process where DNA makes a copy of itself during cell division."
+          ],
+          "hint": null
+        }
+      ]
+    }
+  },
+  {
+    "test_name": "simple_definition_focus",
+    "provider": "huggingface",
+    "model": "qwen-1.5b",
+    "timestamp": "20251108_111724",
+    "temperature": 0.7,
+    "parse_status": "failed",
+    "source_text": "Artificial Intelligence (AI) refers to the simulation of human intelligence in machines. Machine Learning is a subset of AI that enables systems to learn from data. Deep Learning uses neural networks with multiple layers. Natural Language Processing (NLP) allows computers to understand human language.",
+    "prompt_template": "Create definition-focused flashcards. Each card should ask 'What is X?' with clear answers. Return as JSON: {{\"cards\": [{{\"front\": \"What is...\", \"back\": [\"definition\"], \"hint\": \"category\"}}]}}.\n\nContent: {source_text}",
+    "formatted_prompt": "Create definition-focused flashcards. Each card should ask 'What is X?' with clear answers. Return as JSON: {\"cards\": [{\"front\": \"What is...\", \"back\": [\"definition\"], \"hint\": \"category\"}]}.\n\nContent: Artificial Intelligence (AI) refers to the simulation of human intelligence in machines. Machine Learning is a subset of AI that enables systems to learn from data. Deep Learning uses neural networks with multiple layers. Natural Language Processing (NLP) allows computers to understand human language.",
+    "raw_output": "ificial Intelligence?\",\n      \"back\": \"Artificial Intelligence (AI) refers to the simulation of human intelligence in machines.\",\n      \"hint\": \"Category\"\n    },\n    {\n      \"front\": \"What is Machine Learning?\",\n      \"back\": \"Machine Learning is a subset of AI that enables systems to learn from data.\",\n      \"hint\": \"Category\"\n    },\n    {\n      \"front\": \"What is Deep Learning?\",\n      \"back\": \"Deep Learning uses neural networks with multiple layers.\",\n      \"hint\": \"Category\"\n    },\n    {\n      \"front\": \"What is Natural Language Processing (NLP)?\",\n      \"back\": \"Natural Language Processing (NLP) allows computers to understand human language.\",\n      \"hint\": \"Category\"\n    }\n  ]\n}\n```",
+    "parsed_output": null,
+    "salvaged_cards": null
+  },
+  {
+    "test_name": "numbered_facts_math",
+    "provider": "huggingface",
+    "model": "qwen-1.5b",
+    "timestamp": "20251108_111735",
+    "temperature": 0.7,
+    "parse_status": "partial",
+    "source_text": "The Pythagorean theorem states that in a right triangle, a² + b² = c², where c is the hypotenuse. A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself. The first five prime numbers are 2, 3, 5, 7, and 11. Pi (π) is approximately 3.14159 and represents the ratio of a circle's circumference to its diameter.",
+    "prompt_template": "Generate flashcards that break down information into numbered points. Format:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"List the key facts about X\",\n      \"back\": [\"Fact 1\", \"Fact 2\", \"Fact 3\"],\n      \"hint\": \"Topic category\"\n    }}\n  ]\n}}\n\nSource: {source_text}",
+    "formatted_prompt": "Generate flashcards that break down information into numbered points. Format:\n{\n  \"cards\": [\n    {\n      \"front\": \"List the key facts about X\",\n      \"back\": [\"Fact 1\", \"Fact 2\", \"Fact 3\"],\n      \"hint\": \"Topic category\"\n    }\n  ]\n}\n\nSource: The Pythagorean theorem states that in a right triangle, a² + b² = c², where c is the hypotenuse. A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself. The first five prime numbers are 2, 3, 5, 7, and 11. Pi (π) is approximately 3.14159 and represents the ratio of a circle's circumference to its diameter.",
+    "raw_output": "orem states that in a right triangle, a² + b² = c², where c is the hypotenuse.\",\n      \"back\": [\"In a right triangle, the square of the length of the hypotenuse (c) is equal to the sum of the squares of the lengths of the other two sides (a and b). This relationship can be used to solve for missing side lengths when one or more side lengths are known.\", \"For example, if you know the lengths of two sides of a right triangle, you can find the length of the third side using this formula.\"],\n      \"hint\": \"Geometry/Algebra\"\n    },\n    {\n      \"front\": \"A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.\",\n      \"back\": [\"Prime numbers have many interesting properties and applications in mathematics. For instance, they are fundamental in cryptography because it is difficult to factorize large prime numbers. Prime numbers also play a crucial role in the RSA encryption algorithm.\", \"Some notable examples of prime numbers include 2, 3, 5, 7, 11, 13, 17, 19, etc. They continue infinitely without repeating any pattern.\"]\n      \"hint\": \"Number Theory/Combinatorics\"\n    },\n    {\n      \"front\": \"The first five prime numbers are 2, 3, 5, 7, and 11.\",\n      \"back\": [\"These are the smallest prime numbers. It is important to note that there are infinitely many prime numbers, as proven by Euclid over 2000 years ago. While most primes are small, finding larger primes becomes increasingly challenging with each increment in size.\",\n      \"Every even number greater than 2 can be expressed as the product of two primes. This is an example of the Fundamental Theorem of Arithmetic.\"]\n      \"hint\": \"Number Theory\"\n    },\n    {\n      \"front\": \"Pi (π) is approximately 3.14159 and represents the ratio of a circle’s circumference to its diameter.\",\n      \"back\": [\"Pi is a mathematical constant representing the ratio of a circle's circumference to its diameter. It is an irrational number, meaning its decimal representation goes on forever without repeating.\",\n      \"The value of pi varies depending on the precision needed, but the commonly accepted approximation is 3.14159. In many contexts, such as calculating areas and volumes, π is often approximated as 3.14.\"]\n      \"hint\": \"Calculus/Mathematics\"\n    }\n  ]\n}",
+    "parsed_output": null,
+    "salvaged_cards": {
+      "cards": [
+        {
+          "front": "A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.",
+          "back": [
+            "Prime numbers have many interesting properties and applications in mathematics. For instance, they are fundamental in cryptography because it is difficult to factorize large prime numbers. Prime numbers also play a crucial role in the RSA encryption algorithm.",
+            "Some notable examples of prime numbers include 2, 3, 5, 7, 11, 13, 17, 19, etc. They continue infinitely without repeating any pattern.",
+            "hint",
+            "Number Theory/Combinatorics",
+            "front",
+            "The first five prime numbers are 2, 3, 5, 7, and 11.",
+            "back",
+            "These are the smallest prime numbers. It is important to note that there are infinitely many prime numbers, as proven by Euclid over 2000 years ago. While most primes are small, finding larger primes becomes increasingly challenging with each increment in size.",
+            "Every even number greater than 2 can be expressed as the product of two primes. This is an example of the Fundamental Theorem of Arithmetic.",
+            "hint",
+            "Number Theory",
+            "front",
+            "Pi (π) is approximately 3.14159 and represents the ratio of a circle’s circumference to its diameter.",
+            "back",
+            "Pi is a mathematical constant representing the ratio of a circle's circumference to its diameter. It is an irrational number, meaning its decimal representation goes on forever without repeating.",
+            "The value of pi varies depending on the precision needed, but the commonly accepted approximation is 3.14159. In many contexts, such as calculating areas and volumes, π is often approximated as 3.14.",
+            "hint",
+            "Calculus/Mathematics"
+          ],
+          "hint": null
+        }
+      ]
+    }
+  },
+  {
+    "test_name": "application_based_programming",
+    "provider": "huggingface",
+    "model": "qwen-1.5b",
+    "timestamp": "20251108_111817",
+    "temperature": 0.7,
+    "parse_status": "failed",
+    "source_text": "Python lists are mutable, ordered collections that can contain mixed data types. Lists are created using square brackets. Common list methods include append(), remove(), pop(), and sort(). List comprehensions provide a concise way to create lists. Example: [x**2 for x in range(10)] creates a list of squares.",
+    "prompt_template": "Create application-focused flashcards. Each card should test practical understanding with 'How do you...' or 'When would you...' questions.\n\nJSON format:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"How/When/Why question\",\n      \"back\": [\"practical answer\"],\n      \"hint\": \"context\"\n    }}\n  ]\n}}\n\nMaterial:\n{source_text}",
+    "formatted_prompt": "Create application-focused flashcards. Each card should test practical understanding with 'How do you...' or 'When would you...' questions.\n\nJSON format:\n{\n  \"cards\": [\n    {\n      \"front\": \"How/When/Why question\",\n      \"back\": [\"practical answer\"],\n      \"hint\": \"context\"\n    }\n  ]\n}\n\nMaterial:\nPython lists are mutable, ordered collections that can contain mixed data types. Lists are created using square brackets. Common list methods include append(), remove(), pop(), and sort(). List comprehensions provide a concise way to create lists. Example: [x**2 for x in range(10)] creates a list of squares.",
+    "raw_output": "ython list?\",\n      \"back\": \"A mutable, ordered collection that can hold different data types.\",\n      \"hint\": \"Definition and basic concept.\"\n    },\n    {\n      \"front\": \"How do you create a Python list?\",\n      \"back\": \"[variable_name] = [expression]\",\n      \"hint\": \"Syntax example.\"\n    },\n    {\n      \"front\": \"What does the `append()` method do on a list?\",\n      \"back\": \"Adds an element at the end of the list.\",\n      \"hint\": \"Common use case.\"\n    },\n    {\n      \"front\": \"How do you remove an item from a list?\",\n      \"back\": \"list.remove(item)\",\n      \"hint\": \"Removes a specified item from the list.\"\n    },\n    {\n      \"front\": \"What happens when you call `pop()` on a list?\",\n      \"back\": \"Removes and returns the last item if no index is provided; otherwise, removes and returns the item at the given index.\",\n      \"hint\": \"Behavior based on parameters.\"\n    },\n    {\n      \"front\": \"Can you explain what `sort()` does?\",\n      \"back\": \"Sorts elements of the list in place (does not return new list).\",\n      \"hint\": \"Purpose and effect.\"\n    },\n    {\n      \"front\": \"How do you make a list comprehension?\",\n      \"back\": \"[new_list] = [expr for var in iterable]\",\n      \"hint\": \"Syntax of creating a list using a loop and condition.\"\n    }\n  ]\n}\n```",
+    "parsed_output": null,
+    "salvaged_cards": null
+  },
+  {
+    "test_name": "comparison_style_economics",
+    "provider": "huggingface",
+    "model": "qwen-1.5b",
+    "timestamp": "20251108_111838",
+    "temperature": 0.7,
+    "parse_status": "partial",
+    "source_text": "Capitalism is an economic system based on private ownership and free markets. Socialism involves collective or government ownership of production means. In capitalism, prices are determined by supply and demand. In socialism, the government often controls prices. Capitalism encourages competition, while socialism emphasizes equality.",
+    "prompt_template": "Create comparison flashcards that highlight differences. Format: {{\"cards\": [{{\"front\": \"Compare X and Y\", \"back\": [\"X: point\", \"Y: point\"], \"hint\": \"key difference\"}}]}}.\n\nText: {source_text}",
+    "formatted_prompt": "Create comparison flashcards that highlight differences. Format: {\"cards\": [{\"front\": \"Compare X and Y\", \"back\": [\"X: point\", \"Y: point\"], \"hint\": \"key difference\"}]}.\n\nText: Capitalism is an economic system based on private ownership and free markets. Socialism involves collective or government ownership of production means. In capitalism, prices are determined by supply and demand. In socialism, the government often controls prices. Capitalism encourages competition, while socialism emphasizes equality.",
+    "raw_output": "\": [\n    {\n      \"front\": \"Capitalism vs. Socialism\",\n      \"back\": [\n        \"Capitalism: Private ownership, free markets, prices determined by supply and demand.\",\n        \"Socialism: Collective/government ownership, prices controlled by the government.\"\n      ],\n      \"hint\": \"Key Differences\"\n    }\n  ]\n}\n```\n\nThis format clearly compares the fundamental aspects of capitalist and socialist economic systems.",
+    "parsed_output": null,
+    "salvaged_cards": {
+      "cards": [
+        {
+          "front": "Capitalism vs. Socialism",
+          "back": [
+            "Capitalism: Private ownership, free markets, prices determined by supply and demand.",
+            "Socialism: Collective/government ownership, prices controlled by the government."
+          ],
+          "hint": "Key Differences"
+        }
+      ]
+    }
+  },
+  {
+    "test_name": "minimal_prompt_geography",
+    "provider": "huggingface",
+    "model": "qwen-1.5b",
+    "timestamp": "20251108_111846",
+    "temperature": 0.7,
+    "parse_status": "failed",
+    "source_text": "The Amazon Rainforest is located in South America, primarily in Brazil. It is the world's largest tropical rainforest, covering approximately 5.5 million square kilometers. The Amazon River, which flows through the rainforest, is the second longest river in the world. The rainforest is home to millions of species of plants and animals.",
+    "prompt_template": "JSON flashcards only. Format: {{\"cards\": [{{\"front\": \"?\", \"back\": [\"!\"], \"hint\": \"*\"}}]}}. Text: {source_text}",
+    "formatted_prompt": "JSON flashcards only. Format: {\"cards\": [{\"front\": \"?\", \"back\": [\"!\"], \"hint\": \"*\"}]}. Text: The Amazon Rainforest is located in South America, primarily in Brazil. It is the world's largest tropical rainforest, covering approximately 5.5 million square kilometers. The Amazon River, which flows through the rainforest, is the second longest river in the world. The rainforest is home to millions of species of plants and animals.",
+    "raw_output": "location of the Amazon Rainforest?\",\n      \"back\": \"The Amazon Rainforest is located in South America, primarily in Brazil.\",\n      \"hint\": \"*It covers approximately 5.5 million square kilometers.\"\n    },\n    {\n      \"front\": \"Which river flows through the Amazon Rainforest?\",\n      \"back\": \"The Amazon River\",\n      \"hint\": \"*It is the second longest river in the world.\"\n    },\n    {\n      \"front\": \"How many species live in the Amazon Rainforest?\",\n      \"back\": \"The rainforest is home to millions of species of plants and animals.\",\n      \"hint\": \"*Including over 400,000 plant species and countless animal species.\"\n    }\n  ]\n}\n```",
+    "parsed_output": null,
+    "salvaged_cards": null
+  },
+  {
+    "test_name": "strict_json_chemistry",
+    "provider": "huggingface",
+    "model": "qwen-1.5b",
+    "timestamp": "20251108_111857",
+    "temperature": 0.7,
+    "parse_status": "partial",
+    "source_text": "Water (H2O) is composed of two hydrogen atoms and one oxygen atom. It has a boiling point of 100°C at sea level. Water is a polar molecule, meaning it has a slight positive charge on one end and a slight negative charge on the other. This polarity allows water to dissolve many substances, earning it the title 'universal solvent'.",
+    "prompt_template": "CRITICAL: Output MUST be valid JSON with NO text before or after.\n\nStructure:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"question string\",\n      \"back\": [\"array\", \"of\", \"strings\"],\n      \"hint\": \"string or null\"\n    }}\n  ]\n}}\n\nDO NOT include any explanatory text. DO NOT use markdown code blocks. Return raw JSON only.\n\nInput:\n{source_text}",
+    "formatted_prompt": "CRITICAL: Output MUST be valid JSON with NO text before or after.\n\nStructure:\n{\n  \"cards\": [\n    {\n      \"front\": \"question string\",\n      \"back\": [\"array\", \"of\", \"strings\"],\n      \"hint\": \"string or null\"\n    }\n  ]\n}\n\nDO NOT include any explanatory text. DO NOT use markdown code blocks. Return raw JSON only.\n\nInput:\nWater (H2O) is composed of two hydrogen atoms and one oxygen atom. It has a boiling point of 100°C at sea level. Water is a polar molecule, meaning it has a slight positive charge on one end and a slight negative charge on the other. This polarity allows water to dissolve many substances, earning it the title 'universal solvent'.",
+    "raw_output": "er made up of?\",\n      \"back\": [\"two hydrogen atoms\", \"one oxygen atom\"],\n      \"hint\": null\n    },\n    {\n      \"front\": \"At what temperature does water boil at sea level?\",\n      \"back\": [100°C],\n      \"hint\": null\n    },\n    {\n      \"front\": \"Why is water considered a universal solvent?\",\n      \"back\": [\"polarity\"],\n      \"hint\": null\n    }\n  ]\n}\n```",
+    "parsed_output": null,
+    "salvaged_cards": {
+      "cards": [
+        {
+          "front": "At what temperature does water boil at sea level?",
+          "back": [
+            "hint",
+            "front",
+            "Why is water considered a universal solvent?",
+            "back",
+            "polarity",
+            "hint"
+          ],
+          "hint": null
+        }
+      ]
+    }
+  },
+  {
+    "test_name": "verbose_prompt_literature",
+    "provider": "huggingface",
+    "model": "qwen-1.5b",
+    "timestamp": "20251108_111904",
+    "temperature": 0.7,
+    "parse_status": "partial",
+    "source_text": "Shakespeare's Romeo and Juliet is a tragedy about two young star-crossed lovers whose deaths ultimately reconcile their feuding families. The play was written in 1597 and is set in Verona, Italy. Major themes include love, fate, and the consequences of family rivalry. Famous quotes include 'What's in a name?' and 'A rose by any other name would smell as sweet.'",
+    "prompt_template": "You are an expert literature teacher creating study flashcards for students.\n\nGOALS:\n- Help students remember key details about the text\n- Test comprehension of themes and quotes\n- Make cards engaging and memorable\n\nGUIDELINES:\n- Front: Clear, specific questions\n- Back: Concise answers (1-4 bullet points)\n- Hint: Provide context or memory aids\n- Focus on important concepts, not trivial details\n\nOUTPUT FORMAT:\nYou must return ONLY a JSON object with this exact structure:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"Your question here (maximum 120 characters)\",\n      \"back\": [\"Answer point 1\", \"Answer point 2\"],\n      \"hint\": \"Helpful memory aid or context\"\n    }}\n  ]\n}}\n\nREMEMBER: \n- Return ONLY the JSON\n- No explanations\n- No markdown formatting\n- No code blocks\n- Just the raw JSON object\n\nStudy Content:\n{source_text}",
+    "formatted_prompt": "You are an expert literature teacher creating study flashcards for students.\n\nGOALS:\n- Help students remember key details about the text\n- Test comprehension of themes and quotes\n- Make cards engaging and memorable\n\nGUIDELINES:\n- Front: Clear, specific questions\n- Back: Concise answers (1-4 bullet points)\n- Hint: Provide context or memory aids\n- Focus on important concepts, not trivial details\n\nOUTPUT FORMAT:\nYou must return ONLY a JSON object with this exact structure:\n{\n  \"cards\": [\n    {\n      \"front\": \"Your question here (maximum 120 characters)\",\n      \"back\": [\"Answer point 1\", \"Answer point 2\"],\n      \"hint\": \"Helpful memory aid or context\"\n    }\n  ]\n}\n\nREMEMBER: \n- Return ONLY the JSON\n- No explanations\n- No markdown formatting\n- No code blocks\n- Just the raw JSON object\n\nStudy Content:\nShakespeare's Romeo and Juliet is a tragedy about two young star-crossed lovers whose deaths ultimately reconcile their feuding families. The play was written in 1597 and is set in Verona, Italy. Major themes include love, fate, and the consequences of family rivalry. Famous quotes include 'What's in a name?' and 'A rose by any other name would smell as sweet.'",
+    "raw_output": "hakespeare's Romeo and Juliet?\",\n      \"back\": [\"William Shakespeare\"],\n      \"hint\": \"Shakespearean playwright known for many works including this tragic story.\"\n    },\n    {\n      \"front\": \"'Love is not all,' says Friar Laurence to Romeo.\",\n      \"back\": [\"Friar Laurence suggests that true happiness cannot be solely based on romantic feelings\"],\n      \"hint\": \"Inferiority of love over other virtues; deeper understanding needed.\"\n    },\n    {\n      \"front\": \"Romeo and Juliet die because of their own actions rather than fate.\",\n      \"back\": [\"They commit suicide after learning they will die together in battle\"],\n      \"hint\": \"Dramatic irony at play; unexpected resolution.\"\n    },\n    {\n      \"front\": \"The play is set in Verona, Italy during the Renaissance period.\",\n      \"back\": [\"This era is characterized by arts, culture, science, philosophy, politics, etc.\"],\n      \"hint\": \"Historical accuracy in setting enhances dramatic effect.\"\n    }\n  ]\n}\n```",
+    "parsed_output": null,
+    "salvaged_cards": {
+      "cards": [
+        {
+          "front": "'Love is not all,' says Friar Laurence to Romeo.",
+          "back": [
+            "Friar Laurence suggests that true happiness cannot be solely based on romantic feelings"
+          ],
+          "hint": "Inferiority of love over other virtues; deeper understanding needed."
+        },
+        {
+          "front": "Romeo and Juliet die because of their own actions rather than fate.",
+          "back": [
+            "They commit suicide after learning they will die together in battle"
+          ],
+          "hint": "Dramatic irony at play; unexpected resolution."
+        },
+        {
+          "front": "The play is set in Verona, Italy during the Renaissance period.",
+          "back": [
+            "This era is characterized by arts, culture, science, philosophy, politics, etc."
+          ],
+          "hint": "Historical accuracy in setting enhances dramatic effect."
+        }
+      ]
+    }
+  },
+  {
+    "test_name": "question_types_biology",
+    "provider": "huggingface",
+    "model": "qwen-1.5b",
+    "timestamp": "20251108_111920",
+    "temperature": 0.7,
+    "parse_status": "partial",
+    "source_text": "Mitosis is the process of cell division that results in two identical daughter cells. It consists of four main phases: prophase, metaphase, anaphase, and telophase. During prophase, chromosomes condense and become visible. In metaphase, chromosomes align at the cell's center. During anaphase, sister chromatids separate. In telophase, two nuclei form.",
+    "prompt_template": "Create varied question types: definitions, sequences, comparisons, and applications. Each card should use a different question style.\n\nJSON structure:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"Question (varied type)\",\n      \"back\": [\"answers\"],\n      \"hint\": \"question type\"\n    }}\n  ]\n}}\n\nContent:\n{source_text}",
+    "formatted_prompt": "Create varied question types: definitions, sequences, comparisons, and applications. Each card should use a different question style.\n\nJSON structure:\n{\n  \"cards\": [\n    {\n      \"front\": \"Question (varied type)\",\n      \"back\": [\"answers\"],\n      \"hint\": \"question type\"\n    }\n  ]\n}\n\nContent:\nMitosis is the process of cell division that results in two identical daughter cells. It consists of four main phases: prophase, metaphase, anaphase, and telophase. During prophase, chromosomes condense and become visible. In metaphase, chromosomes align at the cell's center. During anaphase, sister chromatids separate. In telophase, two nuclei form.",
+    "raw_output": "sis\",\n      \"back\": [\"The process of cell division resulting in two identical daughter cells.\", \"It includes four main stages: prophase, metaphase, anaphase, and telophase.\"],\n      \"hint\": \"Definition\"\n    },\n    {\n      \"front\": \"List the Stages of Mitosis\",\n      \"back\": [\"Prophase, Metaphase, Anaphase, Telophase\"],\n      \"hint\": \"Sequence\"\n    },\n    {\n      \"front\": \"Compare Prophase with Metaphase\",\n      \"back\": [\"Prophase involves chromosome condensation and nuclear envelope breakdown.\",\n              \"Metaphase features homologous chromosomes aligned at the cell's center.\"],\n      \"hint\": \"Comparison\"\n    },\n    {\n      \"front\": \"Explain the Role of Chromosomes during Anaphase\",\n      \"back\": [\"During anaphase, sister chromatids separate into individual chromosomes.\",\n              \"This ensures genetic material is evenly distributed to each daughter cell.\"],\n      \"hint\": \"Application\"\n    }\n  ]\n}\n```",
+    "parsed_output": null,
+    "salvaged_cards": {
+      "cards": [
+        {
+          "front": "List the Stages of Mitosis",
+          "back": [
+            "Prophase, Metaphase, Anaphase, Telophase"
+          ],
+          "hint": "Sequence"
+        },
+        {
+          "front": "Compare Prophase with Metaphase",
+          "back": [
+            "Prophase involves chromosome condensation and nuclear envelope breakdown.",
+            "Metaphase features homologous chromosomes aligned at the cell's center."
+          ],
+          "hint": "Comparison"
+        },
+        {
+          "front": "Explain the Role of Chromosomes during Anaphase",
+          "back": [
+            "During anaphase, sister chromatids separate into individual chromosomes.",
+            "This ensures genetic material is evenly distributed to each daughter cell."
+          ],
+          "hint": "Application"
+        }
+      ]
+    }
+  },
+  {
+    "test_name": "bullet_heavy_history",
+    "provider": "huggingface",
+    "model": "qwen-1.5b",
+    "timestamp": "20251108_111934",
+    "temperature": 0.7,
+    "parse_status": "partial",
+    "source_text": "The Industrial Revolution began in Britain in the late 18th century. Key inventions included the steam engine by James Watt (1769), the spinning jenny by James Hargreaves (1764), and the power loom by Edmund Cartwright (1785). The revolution led to urbanization, factory systems, and significant social changes. Working conditions were often harsh, leading to labor movements.",
+    "prompt_template": "Create flashcards with multiple back bullets for comprehensive answers. Aim for 3-4 bullet points per card.\n\nFormat: {{\"cards\": [{{\"front\": \"Q\", \"back\": [\"point 1\", \"point 2\", \"point 3\", \"point 4\"], \"hint\": \"hint\"}}]}}\n\nText:\n{source_text}",
+    "formatted_prompt": "Create flashcards with multiple back bullets for comprehensive answers. Aim for 3-4 bullet points per card.\n\nFormat: {\"cards\": [{\"front\": \"Q\", \"back\": [\"point 1\", \"point 2\", \"point 3\", \"point 4\"], \"hint\": \"hint\"}]}\n\nText:\nThe Industrial Revolution began in Britain in the late 18th century. Key inventions included the steam engine by James Watt (1769), the spinning jenny by James Hargreaves (1764), and the power loom by Edmund Cartwright (1785). The revolution led to urbanization, factory systems, and significant social changes. Working conditions were often harsh, leading to labor movements.",
+    "raw_output": "Revolution\",\n      \"back\": [\n        \"Began in Britain in the late 18th century.\",\n        \"Key inventions included:\",\n        \"Steam engine by James Watt (1769)\",\n        \"Spinning jenny by James Hargreaves (1764)\",\n        \"Power loom by Edmund Cartwright (1785)\"\n      ],\n      \"hint\": \"Note the timing and key figures.\"\n    },\n    {\n      \"front\": \"Urbanization\",\n      \"back\": [\n        \"Resulted from industrial growth.\",\n        \"Workers moved from rural areas to cities.\",\n        \"New industries attracted migrants.\",\n        \"Increased demand for housing and infrastructure.\"\n      ],\n      \"hint\": \"Consider the demographic shift and economic factors.\"\n    },\n    {\n      \"front\": \"Factory Systems\",\n      \"back\": [\n        \"Introduced mass production techniques.\",\n        \"Large-scale assembly lines became common.\",\n        \"Improved efficiency and productivity.\",\n        \"Aided in rapid industrial expansion.\"\n      ],\n      \"hint\": \"Focus on the impact of large-scale production methods.\"\n    },\n    {\n      \"front\": \"Social Changes\",\n      \"back\": [\n        \"Significant shifts occurred in society.\",\n        \"Working class experienced improved living standards.\",\n        \"Middle classes grew wealthier through investments in factories.\",\n        \"Classes diverged into more affluent and less well-off groups.\"\n      ],\n      \"hint\": \"Reflect on societal stratification and class dynamics.\"\n    }\n  ]\n}\n```",
+    "parsed_output": null,
+    "salvaged_cards": {
+      "cards": [
+        {
+          "front": "Urbanization",
+          "back": [
+            "Resulted from industrial growth.",
+            "Workers moved from rural areas to cities.",
+            "New industries attracted migrants.",
+            "Increased demand for housing and infrastructure."
+          ],
+          "hint": "Consider the demographic shift and economic factors."
+        },
+        {
+          "front": "Factory Systems",
+          "back": [
+            "Introduced mass production techniques.",
+            "Large-scale assembly lines became common.",
+            "Improved efficiency and productivity.",
+            "Aided in rapid industrial expansion."
+          ],
+          "hint": "Focus on the impact of large-scale production methods."
+        },
+        {
+          "front": "Social Changes",
+          "back": [
+            "Significant shifts occurred in society.",
+            "Working class experienced improved living standards.",
+            "Middle classes grew wealthier through investments in factories.",
+            "Classes diverged into more affluent and less well-off groups."
+          ],
+          "hint": "Reflect on societal stratification and class dynamics."
+        }
+      ]
+    }
+  }
+]

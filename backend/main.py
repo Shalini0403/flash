@@ -16,11 +16,12 @@ import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from logger import Logger
-# Import custom modules
-from pdf_processor import PDFProcessor, PDFSection
 from pydantic import BaseModel, Field
 from transformers import AutoModelForCausalLM, AutoTokenizer
+
+from backend.logger import Logger
+# Import custom modules
+from backend.pdf_processor import PDFProcessor, PDFSection
 
 # ============================================================================
 # CONFIGURATION

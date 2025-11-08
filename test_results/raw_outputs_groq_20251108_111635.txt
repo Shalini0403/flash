@@ -1,0 +1,855 @@
+================================================================================
+ALL RAW OUTPUTS - GROQ - 20251108_111635
+Model: llama-3.1-8b-instant, Temperature: 0.7
+================================================================================
+
+
+================================================================================
+TEST: baseline_photosynthesis
+Provider: groq
+Model: llama-3.1-8b-instant
+Status: success
+Timestamp: 20251108_111954
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+You are an educational assistant that reads study material and creates flashcards to help students remember key facts.
+
+Your task: **generate concise, varied flashcards** in valid JSON format.
+
+Each flashcard must have:
+- "front": a short question or prompt (≤120 characters)
+- "back": a list of 1–4 short bullets (each ≤1 line)
+- "hint": a brief clue if possible (optional but preferred)
+
+Format your final output strictly as:
+{{
+  "cards": [
+    {{
+      "front": "...",
+      "back": ["...", "..."],
+      "hint": "..."
+    }},
+    ...
+  ]
+}}
+
+Return only JSON — no extra commentary.
+
+Study Text:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Photosynthesis is the process by which plants convert light energy into chemical energy. It occurs in the chloroplasts of plant cells. The process requires carbon dioxide, water, and sunlight. The main product is glucose, and oxygen is released as a byproduct. Photosynthesis has two main stages: the light-dependent reactions and the Calvin cycle.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+{
+  "cards": [
+    {
+      "front": "What is photosynthesis?",
+      "back": [
+        "Process of converting light energy into chemical energy",
+        "Occurs in chloroplasts of plant cells"
+      ],
+      "hint": "Plant cells"
+    },
+    {
+      "front": "What are the inputs required for photosynthesis?",
+      "back": [
+        "Carbon dioxide",
+        "Water",
+        "Sunlight"
+      ]
+    },
+    {
+      "front": "What is the main product of photosynthesis?",
+      "back": [
+        "Glucose"
+      ]
+    },
+    {
+      "front": "What is released as a byproduct of photosynthesis?",
+      "back": [
+        "Oxygen"
+      ]
+    },
+    {
+      "front": "What are the two main stages of photosynthesis?",
+      "back": [
+        "Light-dependent reactions",
+        "Calvin cycle"
+      ]
+    },
+    {
+      "front": "Where does photosynthesis occur?",
+      "back": [
+        "Chloroplasts of plant cells"
+      ]
+    }
+  ]
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: short_prompt_history
+Provider: groq
+Model: llama-3.1-8b-instant
+Status: success
+Timestamp: 20251108_111956
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Create flashcards as JSON. Format: {{"cards": [{{"front": "question", "back": ["answer1", "answer2"], "hint": "clue"}}]}}. Only return valid JSON.
+
+Text: {source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+World War II was a global conflict that lasted from 1939 to 1945. It involved most of the world's nations forming two opposing military alliances: the Allies and the Axis. Key events include the invasion of Poland, Pearl Harbor attack, D-Day invasion, and the atomic bombings of Hiroshima and Nagasaki.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+{
+  "cards": [
+    {
+      "front": "What was the duration of World War II?",
+      "back": ["1939 to 1945"],
+      "hint": "Two-digit years"
+    },
+    {
+      "front": "What were the two opposing military alliances in World War II?",
+      "back": ["The Allies", "The Axis"],
+      "hint": "World War II groups"
+    },
+    {
+      "front": "What was the name of the event where Japan attacked the United States?",
+      "back": ["Pearl Harbor attack"],
+      "hint": "US military base"
+    },
+    {
+      "front": "What was the name of the operation where Allied forces landed in France?",
+      "back": ["D-Day invasion"],
+      "hint": "WWII operation"
+    },
+    {
+      "front": "What were the targets of the atomic bombings?",
+      "back": ["Hiroshima and Nagasaki"],
+      "hint": "Japanese cities"
+    }
+  ]
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: detailed_prompt_science
+Provider: groq
+Model: llama-3.1-8b-instant
+Status: success
+Timestamp: 20251108_111956
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+You are an expert educational content creator specializing in creating study flashcards.
+
+INSTRUCTIONS:
+1. Read the study material carefully
+2. Identify key concepts, definitions, and facts
+3. Create clear, concise flashcards that test understanding
+4. Each flashcard should focus on ONE concept
+5. Make questions specific and answerable
+
+FORMAT REQUIREMENTS:
+- Output ONLY valid JSON
+- Use this exact structure:
+{{
+  "cards": [
+    {{
+      "front": "Clear question (max 120 chars)",
+      "back": ["Answer point 1", "Answer point 2", "Answer point 3"],
+      "hint": "Optional helpful hint"
+    }}
+  ]
+}}
+
+IMPORTANT: Return ONLY the JSON object. No explanations before or after.
+
+Study Material:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+DNA, or deoxyribonucleic acid, is the hereditary material in humans and almost all other organisms. DNA is made up of molecules called nucleotides. Each nucleotide contains a phosphate group, a sugar group and a nitrogen base. The four types of nitrogen bases are adenine (A), thymine (T), guanine (G) and cytosine (C). DNA replication is the process by which DNA makes a copy of itself during cell division.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+{
+  "cards": [
+    {
+      "front": "What is the main function of DNA in humans?",
+      "back": ["To store genetic information", "To pass on traits to offspring"],
+      "hint": "Hereditary material"
+    },
+    {
+      "front": "What are the components of a nucleotide in DNA?",
+      "back": ["Phosphate group", "Sugar group", "Nitrogen base"],
+      "hint": "Basic DNA structure"
+    },
+    {
+      "front": "What are the four types of nitrogen bases in DNA?",
+      "back": ["Adenine (A)", "Thymine (T)", "Guanine (G)", "Cytosine (C)"],
+      "hint": "Nitrogen base composition"
+    },
+    {
+      "front": "What is DNA replication?",
+      "back": ["The process by which DNA makes a copy of itself during cell division"],
+      "hint": "Process of DNA duplication"
+    }
+  ]
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: simple_definition_focus
+Provider: groq
+Model: llama-3.1-8b-instant
+Status: success
+Timestamp: 20251108_111957
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Create definition-focused flashcards. Each card should ask 'What is X?' with clear answers. Return as JSON: {{"cards": [{{"front": "What is...", "back": ["definition"], "hint": "category"}}]}}.
+
+Content: {source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Artificial Intelligence (AI) refers to the simulation of human intelligence in machines. Machine Learning is a subset of AI that enables systems to learn from data. Deep Learning uses neural networks with multiple layers. Natural Language Processing (NLP) allows computers to understand human language.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+```json
+{
+  "cards": [
+    {
+      "front": "What is Artificial Intelligence?",
+      "back": ["The simulation of human intelligence in machines."],
+      "hint": "AI"
+    },
+    {
+      "front": "What is Machine Learning?",
+      "back": ["A subset of AI that enables systems to learn from data."],
+      "hint": "AI Subsets"
+    },
+    {
+      "front": "What is Deep Learning?",
+      "back": ["A type of Machine Learning that uses neural networks with multiple layers."],
+      "hint": "Machine Learning"
+    },
+    {
+      "front": "What is Natural Language Processing?",
+      "back": ["A field that allows computers to understand human language."],
+      "hint": "AI Applications"
+    }
+  ]
+}
+```
+
+This JSON object represents the flashcards with clear definitions and categories for each term. The 'front' property asks the question, the 'back' property provides the definition, and the 'hint' property gives a category or context for the term.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: numbered_facts_math
+Provider: groq
+Model: llama-3.1-8b-instant
+Status: success
+Timestamp: 20251108_111958
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Generate flashcards that break down information into numbered points. Format:
+{{
+  "cards": [
+    {{
+      "front": "List the key facts about X",
+      "back": ["Fact 1", "Fact 2", "Fact 3"],
+      "hint": "Topic category"
+    }}
+  ]
+}}
+
+Source: {source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+The Pythagorean theorem states that in a right triangle, a² + b² = c², where c is the hypotenuse. A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself. The first five prime numbers are 2, 3, 5, 7, and 11. Pi (π) is approximately 3.14159 and represents the ratio of a circle's circumference to its diameter.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+Here are the flashcards based on the given information:
+
+{
+  "cards": [
+    {
+      "front": "Pythagorean Theorem",
+      "back": [
+        "A² + B² = C²",
+        "C is the hypotenuse of a right triangle",
+        "Formula applies to all right triangles"
+      ],
+      "hint": "Geometry"
+    },
+    {
+      "front": "Prime Numbers",
+      "back": [
+        "A natural number greater than 1",
+        "Has no positive divisors other than 1 and itself",
+        "Examples: 2, 3, 5, 7, and 11"
+      ],
+      "hint": "Math"
+    },
+    {
+      "front": "Pi (π)",
+      "back": [
+        "Approximately 3.14159",
+        "Ratio of a circle's circumference to its diameter",
+        "Irrational number"
+      ],
+      "hint": "Math"
+    }
+  ]
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: application_based_programming
+Provider: groq
+Model: llama-3.1-8b-instant
+Status: success
+Timestamp: 20251108_111958
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Create application-focused flashcards. Each card should test practical understanding with 'How do you...' or 'When would you...' questions.
+
+JSON format:
+{{
+  "cards": [
+    {{
+      "front": "How/When/Why question",
+      "back": ["practical answer"],
+      "hint": "context"
+    }}
+  ]
+}}
+
+Material:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Python lists are mutable, ordered collections that can contain mixed data types. Lists are created using square brackets. Common list methods include append(), remove(), pop(), and sort(). List comprehensions provide a concise way to create lists. Example: [x**2 for x in range(10)] creates a list of squares.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+```json
+{
+  "cards": [
+    {
+      "front": "How do you create an empty list in Python?",
+      "back": ["Using square brackets: e.g., my_list = []"],
+      "hint": "Basic List Operations"
+    },
+    {
+      "front": "When would you use the append() method on a list?",
+      "back": ["To add an element to the end of the list"],
+      "hint": "List Methods"
+    },
+    {
+      "front": "How do you remove the first occurrence of an element from a list?",
+      "back": ["Using the remove() method: e.g., my_list.remove(element)"],
+      "hint": "List Methods"
+    },
+    {
+      "front": "When would you use the pop() method on a list?",
+      "back": ["To remove and return the last element of the list, or a specific index"],
+      "hint": "List Methods"
+    },
+    {
+      "front": "How do you sort a list of integers in ascending order?",
+      "back": ["Using the sort() method: e.g., my_list.sort()"],
+      "hint": "List Methods"
+    },
+    {
+      "front": "When would you use a list comprehension to create a new list?",
+      "back": ["To perform a one-time operation on an existing list, or to create a new list from scratch"],
+      "hint": "List Comprehensions"
+    },
+    {
+      "front": "How do you create a list of squares from 0 to 9?",
+      "back": ["Using a list comprehension: e.g., [x**2 for x in range(10)]"],
+      "hint": "List Comprehensions"
+    },
+    {
+      "front": "When would you use the index() method on a list?",
+      "back": ["To find the index of the first occurrence of an element in the list"],
+      "hint": "List Methods"
+    },
+    {
+      "front": "How do you check if an element is in a list?",
+      "back": ["Using the 'in' operator: e.g., element in my_list"],
+      "hint": "List Membership"
+    }
+  ]
+}
+```
+
+This set of flashcards covers various practical aspects of working with Python lists, including creating empty lists, using common methods like append(), remove(), pop(), and sort(), and leveraging list comprehensions for concise list creation. The hints provided offer context for each question to help reinforce the learning material.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: comparison_style_economics
+Provider: groq
+Model: llama-3.1-8b-instant
+Status: success
+Timestamp: 20251108_111959
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Create comparison flashcards that highlight differences. Format: {{"cards": [{{"front": "Compare X and Y", "back": ["X: point", "Y: point"], "hint": "key difference"}}]}}.
+
+Text: {source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Capitalism is an economic system based on private ownership and free markets. Socialism involves collective or government ownership of production means. In capitalism, prices are determined by supply and demand. In socialism, the government often controls prices. Capitalism encourages competition, while socialism emphasizes equality.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+Here are some comparison flashcards highlighting the differences between capitalism and socialism:
+
+```json
+{
+  "cards": [
+    {
+      "front": "Compare Capitalism and Socialism",
+      "back": [
+        "Capitalism: Based on private ownership and free markets",
+        "Socialism: Involves collective or government ownership of production means"
+      ],
+      "hint": "Ownership of production means"
+    },
+    {
+      "front": "Compare Capitalism and Socialism",
+      "back": [
+        "Capitalism: Prices determined by supply and demand",
+        "Socialism: Government often controls prices"
+      ],
+      "hint": "Price determination"
+    },
+    {
+      "front": "Compare Capitalism and Socialism",
+      "back": [
+        "Capitalism: Encourages competition",
+        "Socialism: Emphasizes equality"
+      ],
+      "hint": "Economic values"
+    }
+  ]
+}
+```
+
+Alternatively, you can create more detailed flashcards with multiple points:
+
+```json
+{
+  "cards": [
+    {
+      "front": "Compare Capitalism and Socialism",
+      "back": [
+        "Capitalism: Based on private ownership and free markets",
+        "Capitalism: Prices determined by supply and demand",
+        "Capitalism: Encourages competition",
+        "Socialism: Involves collective or government ownership of production means",
+        "Socialism: Government often controls prices",
+        "Socialism: Emphasizes equality"
+      ],
+      "hint": "Key differences between capitalism and socialism"
+    },
+    {
+      "front": "Key differences between Capitalism and Socialism",
+      "back": [
+        "Capitalism: Private ownership",
+        "Socialism: Government or collective ownership"
+      ],
+      "hint": "Ownership aspect"
+    },
+    {
+      "front": "Key differences between Capitalism and Socialism",
+      "back": [
+        "Capitalism: Supply and demand determine prices",
+        "Socialism: Government controls prices"
+      ],
+      "hint": "Price determination"
+    },
+    {
+      "front": "Key differences between Capitalism and Socialism",
+      "back": [
+        "Capitalism: Encourages competition",
+        "Socialism: Emphasizes equality"
+      ],
+      "hint": "Economic values"
+    }
+  ]
+}
+```
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: minimal_prompt_geography
+Provider: groq
+Model: llama-3.1-8b-instant
+Status: success
+Timestamp: 20251108_112000
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+JSON flashcards only. Format: {{"cards": [{{"front": "?", "back": ["!"], "hint": "*"}}]}}. Text: {source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+The Amazon Rainforest is located in South America, primarily in Brazil. It is the world's largest tropical rainforest, covering approximately 5.5 million square kilometers. The Amazon River, which flows through the rainforest, is the second longest river in the world. The rainforest is home to millions of species of plants and animals.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+{
+  "cards": [
+    {
+      "front": "Where is the Amazon Rainforest primarily located?",
+      "back": ["South America, primarily in Brazil"],
+      "hint": "*Hint: Country in South America where the Amazon Rainforest mostly lies."
+    },
+    {
+      "front": "What is the Amazon Rainforest in the world?",
+      "back": ["The world's largest tropical rainforest"],
+      "hint": "*Hint: The Amazon Rainforest is the biggest of its kind globally."
+    },
+    {
+      "front": "Approximate area covered by the Amazon Rainforest?",
+      "back": ["5.5 million square kilometers"],
+      "hint": "*Hint: Area covered by the Amazon Rainforest in square kilometers."
+    },
+    {
+      "front": "What is the Amazon River in the world?",
+      "back": ["The second longest river"],
+      "hint": "*Hint: Position of the Amazon River in terms of length."
+    },
+    {
+      "front": "How many species are in the Amazon Rainforest?",
+      "back": ["Millions of species of plants and animals"],
+      "hint": "*Hint: Large number of species found in the Amazon Rainforest."
+    }
+  ]
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: strict_json_chemistry
+Provider: groq
+Model: llama-3.1-8b-instant
+Status: success
+Timestamp: 20251108_112000
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+CRITICAL: Output MUST be valid JSON with NO text before or after.
+
+Structure:
+{{
+  "cards": [
+    {{
+      "front": "question string",
+      "back": ["array", "of", "strings"],
+      "hint": "string or null"
+    }}
+  ]
+}}
+
+DO NOT include any explanatory text. DO NOT use markdown code blocks. Return raw JSON only.
+
+Input:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Water (H2O) is composed of two hydrogen atoms and one oxygen atom. It has a boiling point of 100°C at sea level. Water is a polar molecule, meaning it has a slight positive charge on one end and a slight negative charge on the other. This polarity allows water to dissolve many substances, earning it the title 'universal solvent'.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+{
+  "cards": [
+    {
+      "front": "What is the composition of water?",
+      "back": ["Water (H2O) is composed of two hydrogen atoms and one oxygen atom."],
+      "hint": null
+    },
+    {
+      "front": "What is the boiling point of water at sea level?",
+      "back": ["100°C"],
+      "hint": null
+    },
+    {
+      "front": "What type of molecule is water?",
+      "back": ["polar"],
+      "hint": null
+    },
+    {
+      "front": "What is the polarity of water?",
+      "back": ["a slight positive charge on one end and a slight negative charge on the other"],
+      "hint": null
+    },
+    {
+      "front": "What is the universal solvent?",
+      "back": ["water"],
+      "hint": null
+    },
+    {
+      "front": "What allows water to dissolve many substances?",
+      "back": ["its polarity"],
+      "hint": null
+    }
+  ]
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: verbose_prompt_literature
+Provider: groq
+Model: llama-3.1-8b-instant
+Status: success
+Timestamp: 20251108_112001
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+You are an expert literature teacher creating study flashcards for students.
+
+GOALS:
+- Help students remember key details about the text
+- Test comprehension of themes and quotes
+- Make cards engaging and memorable
+
+GUIDELINES:
+- Front: Clear, specific questions
+- Back: Concise answers (1-4 bullet points)
+- Hint: Provide context or memory aids
+- Focus on important concepts, not trivial details
+
+OUTPUT FORMAT:
+You must return ONLY a JSON object with this exact structure:
+{{
+  "cards": [
+    {{
+      "front": "Your question here (maximum 120 characters)",
+      "back": ["Answer point 1", "Answer point 2"],
+      "hint": "Helpful memory aid or context"
+    }}
+  ]
+}}
+
+REMEMBER: 
+- Return ONLY the JSON
+- No explanations
+- No markdown formatting
+- No code blocks
+- Just the raw JSON object
+
+Study Content:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Shakespeare's Romeo and Juliet is a tragedy about two young star-crossed lovers whose deaths ultimately reconcile their feuding families. The play was written in 1597 and is set in Verona, Italy. Major themes include love, fate, and the consequences of family rivalry. Famous quotes include 'What's in a name?' and 'A rose by any other name would smell as sweet.'
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+{
+  "cards": [
+    {
+      "front": "What are the main themes in Romeo and Juliet?",
+      "back": ["Love", "Fate", "Consequences of family rivalry"],
+      "hint": "Consider the tragic outcome and family feud"
+    },
+    {
+      "front": "What famous phrase does Juliet say in Romeo and Juliet?",
+      "back": ["What's in a name?", "A rose by any other name would smell as sweet"],
+      "hint": "Think of the meaning behind the name 'Montague' and 'Capulet'"
+    },
+    {
+      "front": "When was Romeo and Juliet written?",
+      "back": ["1597"],
+      "hint": "The play is considered a classic work of literature"
+    },
+    {
+      "front": "Where is Romeo and Juliet set?",
+      "back": ["Verona, Italy"],
+      "hint": "The city's setting has an Italian Renaissance feel"
+    }
+  ]
+}
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: question_types_biology
+Provider: groq
+Model: llama-3.1-8b-instant
+Status: success
+Timestamp: 20251108_112002
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Create varied question types: definitions, sequences, comparisons, and applications. Each card should use a different question style.
+
+JSON structure:
+{{
+  "cards": [
+    {{
+      "front": "Question (varied type)",
+      "back": ["answers"],
+      "hint": "question type"
+    }}
+  ]
+}}
+
+Content:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+Mitosis is the process of cell division that results in two identical daughter cells. It consists of four main phases: prophase, metaphase, anaphase, and telophase. During prophase, chromosomes condense and become visible. In metaphase, chromosomes align at the cell's center. During anaphase, sister chromatids separate. In telophase, two nuclei form.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+Here are 4 questions in the specified JSON structure, each using a different question type:
+
+```json
+{
+  "cards": [
+    {
+      "front": "What is the term for the process of cell division that results in two identical daughter cells?",
+      "back": ["Mitosis"],
+      "hint": "Definition"
+    },
+    {
+      "front": "In what order do the following phases occur during mitosis: prophase, metaphase, anaphase, and telophase?",
+      "back": ["prophase, metaphase, anaphase, telophase"],
+      "hint": "Sequence"
+    },
+    {
+      "front": "How do the sister chromatids separate during mitosis?",
+      "back": ["During anaphase"],
+      "hint": "Comparison"
+    },
+    {
+      "front": "A biologist is studying the process of cell division in a plant cell. What phase of mitosis is characterized by the alignment of chromosomes at the cell's center?",
+      "back": ["Metaphase"],
+      "hint": "Application"
+    }
+  ]
+}
+```
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TEST: bullet_heavy_history
+Provider: groq
+Model: llama-3.1-8b-instant
+Status: success
+Timestamp: 20251108_112002
+================================================================================
+
+PROMPT TEMPLATE:
+--------------------------------------------------------------------------------
+Create flashcards with multiple back bullets for comprehensive answers. Aim for 3-4 bullet points per card.
+
+Format: {{"cards": [{{"front": "Q", "back": ["point 1", "point 2", "point 3", "point 4"], "hint": "hint"}}]}}
+
+Text:
+{source_text}
+--------------------------------------------------------------------------------
+
+SOURCE TEXT:
+--------------------------------------------------------------------------------
+The Industrial Revolution began in Britain in the late 18th century. Key inventions included the steam engine by James Watt (1769), the spinning jenny by James Hargreaves (1764), and the power loom by Edmund Cartwright (1785). The revolution led to urbanization, factory systems, and significant social changes. Working conditions were often harsh, leading to labor movements.
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+--------------------------------------------------------------------------------
+Here are the flashcards for the given text:
+
+{"cards": [
+{"front": "When and where did the Industrial Revolution begin?", 
+"back": ["Late 18th century", "Britain", "Specifically in England, where coal and iron ore were abundant", "This marked a significant shift from manual labor to machine-based manufacturing"],
+"hint": "Geography and timeline"},
+{"front": "Key inventions of the Industrial Revolution", 
+"back": ["Steam engine by James Watt (1769)", "Spinning jenny by James Hargreaves (1764)", "Power loom by Edmund Cartwright (1785)", "These innovations greatly increased efficiency and production"],
+"hint": "Key innovators and their inventions"},
+{"front": "What were some social changes caused by the Industrial Revolution?", 
+"back": ["Urbanization", "Factory systems", "Harsh working conditions", "Labor movements to improve working conditions"],
+"hint": "Impact on society"},
+{"front": "What were some major consequences of the Industrial Revolution for workers?", 
+"back": ["Harsh working conditions", "Long working hours", "Low wages", "Labor movements to improve working conditions"],
+"hint": "Working conditions during the Industrial Revolution"},
+{"front": "Who are some notable inventors associated with the Industrial Revolution?", 
+"back": ["James Watt", "James Hargreaves", "Edmund Cartwright", "Their inventions had a significant impact on manufacturing and industry"],
+"hint": "Notable inventors and their contributions"},
+{"front": "What were some factors that contributed to the growth of the Industrial Revolution in Britain?", 
+"back": ["Abundance of coal and iron ore", "Availability of water power", "Presence of skilled workers", "Access to trade and markets"],
+"hint": "Factors that contributed to growth"}
+]}
+--------------------------------------------------------------------------------
+

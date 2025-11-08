@@ -1,0 +1,64 @@
+{
+    "test_cases": [
+      {
+        "name": "baseline_photosynthesis",
+        "text": "Photosynthesis is the process by which plants convert light energy into chemical energy. It occurs in the chloroplasts of plant cells. The process requires carbon dioxide, water, and sunlight. The main product is glucose, and oxygen is released as a byproduct. Photosynthesis has two main stages: the light-dependent reactions and the Calvin cycle.",
+        "prompt": "You are an educational assistant that reads study material and creates flashcards to help students remember key facts.\n\nYour task: **generate concise, varied flashcards** in valid JSON format.\n\nEach flashcard must have:\n- \"front\": a short question or prompt (≤120 characters)\n- \"back\": a list of 1–4 short bullets (each ≤1 line)\n- \"hint\": a brief clue if possible (optional but preferred)\n\nFormat your final output strictly as:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"...\",\n      \"back\": [\"...\", \"...\"],\n      \"hint\": \"...\"\n    }},\n    ...\n  ]\n}}\n\nReturn only JSON — no extra commentary.\n\nStudy Text:\n{source_text}"
+      },
+      {
+        "name": "short_prompt_history",
+        "text": "World War II was a global conflict that lasted from 1939 to 1945. It involved most of the world's nations forming two opposing military alliances: the Allies and the Axis. Key events include the invasion of Poland, Pearl Harbor attack, D-Day invasion, and the atomic bombings of Hiroshima and Nagasaki.",
+        "prompt": "Create flashcards as JSON. Format: {{\"cards\": [{{\"front\": \"question\", \"back\": [\"answer1\", \"answer2\"], \"hint\": \"clue\"}}]}}. Only return valid JSON.\n\nText: {source_text}"
+      },
+      {
+        "name": "detailed_prompt_science",
+        "text": "DNA, or deoxyribonucleic acid, is the hereditary material in humans and almost all other organisms. DNA is made up of molecules called nucleotides. Each nucleotide contains a phosphate group, a sugar group and a nitrogen base. The four types of nitrogen bases are adenine (A), thymine (T), guanine (G) and cytosine (C). DNA replication is the process by which DNA makes a copy of itself during cell division.",
+        "prompt": "You are an expert educational content creator specializing in creating study flashcards.\n\nINSTRUCTIONS:\n1. Read the study material carefully\n2. Identify key concepts, definitions, and facts\n3. Create clear, concise flashcards that test understanding\n4. Each flashcard should focus on ONE concept\n5. Make questions specific and answerable\n\nFORMAT REQUIREMENTS:\n- Output ONLY valid JSON\n- Use this exact structure:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"Clear question (max 120 chars)\",\n      \"back\": [\"Answer point 1\", \"Answer point 2\", \"Answer point 3\"],\n      \"hint\": \"Optional helpful hint\"\n    }}\n  ]\n}}\n\nIMPORTANT: Return ONLY the JSON object. No explanations before or after.\n\nStudy Material:\n{source_text}"
+      },
+      {
+        "name": "simple_definition_focus",
+        "text": "Artificial Intelligence (AI) refers to the simulation of human intelligence in machines. Machine Learning is a subset of AI that enables systems to learn from data. Deep Learning uses neural networks with multiple layers. Natural Language Processing (NLP) allows computers to understand human language.",
+        "prompt": "Create definition-focused flashcards. Each card should ask 'What is X?' with clear answers. Return as JSON: {{\"cards\": [{{\"front\": \"What is...\", \"back\": [\"definition\"], \"hint\": \"category\"}}]}}.\n\nContent: {source_text}"
+      },
+      {
+        "name": "numbered_facts_math",
+        "text": "The Pythagorean theorem states that in a right triangle, a² + b² = c², where c is the hypotenuse. A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself. The first five prime numbers are 2, 3, 5, 7, and 11. Pi (π) is approximately 3.14159 and represents the ratio of a circle's circumference to its diameter.",
+        "prompt": "Generate flashcards that break down information into numbered points. Format:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"List the key facts about X\",\n      \"back\": [\"Fact 1\", \"Fact 2\", \"Fact 3\"],\n      \"hint\": \"Topic category\"\n    }}\n  ]\n}}\n\nSource: {source_text}"
+      },
+      {
+        "name": "application_based_programming",
+        "text": "Python lists are mutable, ordered collections that can contain mixed data types. Lists are created using square brackets. Common list methods include append(), remove(), pop(), and sort(). List comprehensions provide a concise way to create lists. Example: [x**2 for x in range(10)] creates a list of squares.",
+        "prompt": "Create application-focused flashcards. Each card should test practical understanding with 'How do you...' or 'When would you...' questions.\n\nJSON format:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"How/When/Why question\",\n      \"back\": [\"practical answer\"],\n      \"hint\": \"context\"\n    }}\n  ]\n}}\n\nMaterial:\n{source_text}"
+      },
+      {
+        "name": "comparison_style_economics",
+        "text": "Capitalism is an economic system based on private ownership and free markets. Socialism involves collective or government ownership of production means. In capitalism, prices are determined by supply and demand. In socialism, the government often controls prices. Capitalism encourages competition, while socialism emphasizes equality.",
+        "prompt": "Create comparison flashcards that highlight differences. Format: {{\"cards\": [{{\"front\": \"Compare X and Y\", \"back\": [\"X: point\", \"Y: point\"], \"hint\": \"key difference\"}}]}}.\n\nText: {source_text}"
+      },
+      {
+        "name": "minimal_prompt_geography",
+        "text": "The Amazon Rainforest is located in South America, primarily in Brazil. It is the world's largest tropical rainforest, covering approximately 5.5 million square kilometers. The Amazon River, which flows through the rainforest, is the second longest river in the world. The rainforest is home to millions of species of plants and animals.",
+        "prompt": "JSON flashcards only. Format: {{\"cards\": [{{\"front\": \"?\", \"back\": [\"!\"], \"hint\": \"*\"}}]}}. Text: {source_text}"
+      },
+      {
+        "name": "strict_json_chemistry",
+        "text": "Water (H2O) is composed of two hydrogen atoms and one oxygen atom. It has a boiling point of 100°C at sea level. Water is a polar molecule, meaning it has a slight positive charge on one end and a slight negative charge on the other. This polarity allows water to dissolve many substances, earning it the title 'universal solvent'.",
+        "prompt": "CRITICAL: Output MUST be valid JSON with NO text before or after.\n\nStructure:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"question string\",\n      \"back\": [\"array\", \"of\", \"strings\"],\n      \"hint\": \"string or null\"\n    }}\n  ]\n}}\n\nDO NOT include any explanatory text. DO NOT use markdown code blocks. Return raw JSON only.\n\nInput:\n{source_text}"
+      },
+      {
+        "name": "verbose_prompt_literature",
+        "text": "Shakespeare's Romeo and Juliet is a tragedy about two young star-crossed lovers whose deaths ultimately reconcile their feuding families. The play was written in 1597 and is set in Verona, Italy. Major themes include love, fate, and the consequences of family rivalry. Famous quotes include 'What's in a name?' and 'A rose by any other name would smell as sweet.'",
+        "prompt": "You are an expert literature teacher creating study flashcards for students.\n\nGOALS:\n- Help students remember key details about the text\n- Test comprehension of themes and quotes\n- Make cards engaging and memorable\n\nGUIDELINES:\n- Front: Clear, specific questions\n- Back: Concise answers (1-4 bullet points)\n- Hint: Provide context or memory aids\n- Focus on important concepts, not trivial details\n\nOUTPUT FORMAT:\nYou must return ONLY a JSON object with this exact structure:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"Your question here (maximum 120 characters)\",\n      \"back\": [\"Answer point 1\", \"Answer point 2\"],\n      \"hint\": \"Helpful memory aid or context\"\n    }}\n  ]\n}}\n\nREMEMBER: \n- Return ONLY the JSON\n- No explanations\n- No markdown formatting\n- No code blocks\n- Just the raw JSON object\n\nStudy Content:\n{source_text}"
+      },
+      {
+        "name": "question_types_biology",
+        "text": "Mitosis is the process of cell division that results in two identical daughter cells. It consists of four main phases: prophase, metaphase, anaphase, and telophase. During prophase, chromosomes condense and become visible. In metaphase, chromosomes align at the cell's center. During anaphase, sister chromatids separate. In telophase, two nuclei form.",
+        "prompt": "Create varied question types: definitions, sequences, comparisons, and applications. Each card should use a different question style.\n\nJSON structure:\n{{\n  \"cards\": [\n    {{\n      \"front\": \"Question (varied type)\",\n      \"back\": [\"answers\"],\n      \"hint\": \"question type\"\n    }}\n  ]\n}}\n\nContent:\n{source_text}"
+      },
+      {
+        "name": "bullet_heavy_history",
+        "text": "The Industrial Revolution began in Britain in the late 18th century. Key inventions included the steam engine by James Watt (1769), the spinning jenny by James Hargreaves (1764), and the power loom by Edmund Cartwright (1785). The revolution led to urbanization, factory systems, and significant social changes. Working conditions were often harsh, leading to labor movements.",
+        "prompt": "Create flashcards with multiple back bullets for comprehensive answers. Aim for 3-4 bullet points per card.\n\nFormat: {{\"cards\": [{{\"front\": \"Q\", \"back\": [\"point 1\", \"point 2\", \"point 3\", \"point 4\"], \"hint\": \"hint\"}}]}}\n\nText:\n{source_text}"
+      }
+    ]
+  }
